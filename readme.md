@@ -67,7 +67,7 @@ module.exports = withOffline({
 })
 ```
 
-## options
+## Options
 
 The default object passed to [sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin) is here:
 ```js
@@ -93,6 +93,32 @@ module.exports = withOffline({
   swPreCacheOptions: {
     verbose: true,
     minify: false
+  }
+})
+```
+
+## Custom Service worker register script
+By default `next-offline` will register a service worker with the script below, this is automatically be add to your client side bundle once `nextOffline` is invoked.
+
+```js
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/service-worker.js')
+    .then(registration => console.info('service worker registration successful'))
+    .catch(err => console.warn('service worker registration failed', err.message))
+}
+```
+
+You can pass in your own custom service worker register script by using the `registerPath` option like this:
+
+```js
+// next.config.js
+const withOffline = require('next-offline')
+const { resolve } = require('path')
+
+module.exports = withOffline({
+  swPreCacheOptions: {
+    registerPath: resolve(__dirname, 'my-service-worker.js')
   }
 })
 ```

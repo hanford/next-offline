@@ -23,19 +23,6 @@ module.exports = (nextConfig = {}) => {
         )
       }
 
-      const originalEntry = config.entry
-
-      config.entry = async () => {
-        const entries = await originalEntry()
-        console.log(entries['main.js'])
-
-        if (entries['main.js']) {
-          entries['main.js'].unshift(require.resolve('./sw.js'))
-        }
-
-        return entries
-      }
-
       const { swPreCacheOptions = {} } = nextConfig || config || options
 
       const opts = isEmptyObject(swPreCacheOptions) ? defaultOpts : Object.assign({}, defaultOpts, swPreCacheOptions)
@@ -43,6 +30,18 @@ module.exports = (nextConfig = {}) => {
       config.plugins.push(
         new SWPrecacheWebpackPlugin(opts)
       )
+
+      const originalEntry = config.entry
+
+      config.entry = async () => {
+        const entries = await originalEntry()
+
+        if (entries['main.js']) {
+          entries['main.js'].unshift(require.resolve(opts.registerPath ? opts.registerPath : './sw.js'))
+        }
+
+        return entries
+      }
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options)
