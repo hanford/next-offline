@@ -1,7 +1,8 @@
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const isEmptyObject = require('is-empty-object')
 
 const defaultOpts = {
-  verbose: true,
+  verbose: false,
   minify: true,
   staticFileGlobsIgnorePatterns: [/\.next\//],
   runtimeCaching: [
@@ -14,6 +15,7 @@ const defaultOpts = {
 
 module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
+
     webpack(config, options) {
       if (!options.defaultLoaders) {
         throw new Error(
@@ -21,8 +23,25 @@ module.exports = (nextConfig = {}) => {
         )
       }
 
+      const originalEntry = config.entry
+
+      config.entry = async () => {
+        const entries = await originalEntry()
+        console.log(entries['main.js'])
+
+        if (entries['main.js']) {
+          entries['main.js'].unshift(require.resolve('./sw.js'))
+        }
+
+        return entries
+      }
+
+      const { swPreCacheOptions = {} } = nextConfig || config || options
+
+      const opts = isEmptyObject(swPreCacheOptions) ? defaultOpts : Object.assign({}, defaultOpts, swPreCacheOptions)
+
       config.plugins.push(
-        new SWPrecacheWebpackPlugin(defaultOpts)
+        new SWPrecacheWebpackPlugin(opts)
       )
 
       if (typeof nextConfig.webpack === 'function') {

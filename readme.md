@@ -54,42 +54,6 @@ app.prepare()
   })
 ```
 
-Finally you'll need to ensure you're registering the service worker in each of your pages. `next-offline` comes with a HOC that will wrap your component which you can see the usage below:
-
-```js
-// pages/index.js
-import withOffline from 'next-offline/hoc'
-
-class Index extends PureComponent {
-  ..
-
-  render () {
-    return (
-      <h1>Im the index page!</h1>
-    )
-  }
-}
-
-export default withOffline(Index)
-```
-
-Alternatively you can register the service worker manually
-
-```js
-// pages/index.js
-export default class Index extends PureComponent {
-  componentDidMount () {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(registration => console.info('service worker registration successful'))
-        .catch(err => console.warn('service worker registration failed', err.message))
-    }
-  }
-  ..
-}
-```
-
 Optionally you can add your custom Next.js configuration as parameter
 
 ```js
@@ -99,6 +63,36 @@ const withOffline = require('next-offline')
 module.exports = withOffline({
   webpack(config, options) {
     return config
+  }
+})
+```
+
+## options
+
+The default object passed to [sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin) is here:
+```js
+{
+  verbose: false,
+  minify: true,
+  staticFileGlobsIgnorePatterns: [/\.next\//],
+  runtimeCaching: [
+    {
+      handler: 'networkFirst',
+      urlPattern: /^https?.*/
+    }
+  ]
+}
+```
+
+It can easily be modified by passing a `swPreCacheOptions` object to `withOffline` in your `next.config.js`
+
+```js
+// next.config.js
+const withOffline = require('next-offline')
+module.exports = withOffline({
+  swPreCacheOptions: {
+    verbose: true,
+    minify: false
   }
 })
 ```
