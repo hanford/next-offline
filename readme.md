@@ -1,4 +1,4 @@
-# Next.js + sw-precache
+# next-offline
 
 Use [sw-precache](https://github.com/GoogleChrome/sw-precache) with [Next.js](https://github.com/zeit/next.js)
 
