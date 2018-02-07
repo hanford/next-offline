@@ -58,14 +58,14 @@ Finally you'll need to ensure you're registering the service worker in each of y
 
 ```js
 // pages/index.js
-import withOffline from 'next-offline/hoc.js'
+import withOffline from 'next-offline/hoc'
 
 class Index extends PureComponent {
   ..
 
   render () {
     return (
-      <h1>I'm the index page!</h1>
+      <h1>Im the index page!</h1>
     )
   }
 }
@@ -95,6 +95,7 @@ Optionally you can add your custom Next.js configuration as parameter
 ```js
 // next.config.js
 const withOffline = require('next-offline')
+
 module.exports = withOffline({
   webpack(config, options) {
     return config
