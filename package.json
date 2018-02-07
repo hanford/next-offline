@@ -3,7 +3,34 @@
   "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
-  "repository": "zeit/next-plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanford/next-offline.git"
+  },
+  "bugs": "https://github.com/hanford/next-offline/issues",
+  "authors": [
+    "Jack Hanford"
+  ],
+  "tags": [
+    "react",
+    "next.js",
+    "offline",
+    "service worker",
+    "pre-cache",
+    "networkFirst",
+    "cacheFirst",
+    "webpack"
+  ],
+  "keywords": [
+    "react",
+    "next.js",
+    "offline",
+    "service worker",
+    "pre-cache",
+    "networkFirst",
+    "cacheFirst",
+    "webpack"
+  ],
   "peerDependencies": {
     "react": "~16.2.0",
     "next": "~5.0.0"
