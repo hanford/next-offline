@@ -30,6 +30,7 @@ Then create a `server.js`
 // server.js
 const { createServer } = require('http')
 const next = require('next')
+const { parse } = require('url')
 const { join } = require('path')
 
 const app = next({ dev: process.env.NODE_ENV !== 'production' })
@@ -48,8 +49,8 @@ app.prepare()
         handle(req, res, parsedUrl)
       }
     })
-    .listen(port, () => {
-      console.log(`> Ready on http://localhost:${port}`)
+    .listen(3000, () => {
+      console.log(`> Ready on http://localhost:${3000}`)
     })
   })
 ```

@@ -1,7 +1,24 @@
+const WorkBoxWebpackPlugin = require('workbox-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const isEmptyObject = require('is-empty-object')
 
-const defaultOpts = {
+const isEmptyObject = require('is-empty-object')
+const path = require('path')
+
+const workboxDefaults = {
+  globDirectory: '.next',
+  globPatterns: ['**/*.{html,js}'],
+  swDest: path.join('.next', 'sw.js'),
+  clientsClaim: true,
+  skipWaiting: true,
+  runtimeCaching: [
+    {
+      handler: 'networkFirst',
+      urlPattern: /^https?.*/
+    }
+  ]
+}
+
+const preCacheDefaults = {
   verbose: false,
   minify: true,
   staticFileGlobsIgnorePatterns: [/\.next\//],
@@ -22,13 +39,21 @@ module.exports = (nextConfig = {}) => {
         )
       }
 
-      const { swPreCacheOptions = {} } = nextConfig || config || options
+      const { swPreCacheOptions = {}, UNSAFE_workbox = false } = nextConfig || config || options
 
-      const opts = isEmptyObject(swPreCacheOptions) ? defaultOpts : Object.assign({}, defaultOpts, swPreCacheOptions)
+      const opts = isEmptyObject(swPreCacheOptions)
+        ? preCacheDefaults
+        : Object.assign({}, defaultOpts, swPreCacheOptions)
 
-      config.plugins.push(
-        new SWPrecacheWebpackPlugin(opts)
-      )
+      if (UNSAFE_workbox) {
+        config.plugins.push(
+          new WorkBoxWebpackPlugin({ ...workboxDefaults, ...opts })
+        )
+      } else {
+        config.plugins.push(
+          new SWPrecacheWebpackPlugin(opts)
+        )
+      }
 
       const originalEntry = config.entry
 
