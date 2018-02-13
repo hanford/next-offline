@@ -9,6 +9,7 @@ const target = path.resolve(process.cwd(), './.next/service-worker.js')
 function bundles (app) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${dotNext}/bundles/pages`, (err, files) => {
+
       if (err) {
         resolve(app)
       }
@@ -16,10 +17,7 @@ function bundles (app) {
       if (files) {
         const root = `/_next/${app.buildId}/page`
         app.precaches = app.precaches.concat(files
-          .filter(file => file !== 'app.js')
-          .filter(file => file !== 'drive')
-          .filter(file => file !== 'verify')
-          .filter(file => file !== 'guide')
+          .filter(hasJS)
           .map(file => {
             // req /_next/22321e97-8895-48db-b915-82e255f3faa8/new
             return path.join(root, file)
@@ -42,7 +40,7 @@ function chunks (app) {
       if (files) {
         const root = `/_next/webpack/chunks`
         app.precaches = app.precaches.concat(files
-          .filter(file => /\.js$/.test(file))
+          .filter(hasJS)
           .map(file => {
             // req /_next/webpack/chunks/22321e97-8895-48db-b915-82e255f3faa8.js
             return path.join(root, file)
@@ -54,6 +52,8 @@ function chunks (app) {
     })
   })
 }
+
+const hasJS = file => /\.js$/.test(file)
 
 function app() {
   const app = {
@@ -73,7 +73,7 @@ function app() {
 
 const swSnippet = (precache) =>
 `
-importScripts('/workbox-sw.prod.v2.1.2.js');
+importScripts('https://unpkg.com/workbox-sw@2.1.2/build/importScripts/workbox-sw.prod.v2.1.2.js');
 
 const workboxSW = new WorkboxSW({
   "skipWaiting": true,
@@ -92,6 +92,10 @@ workboxSW.router.registerRoute(/^https?.*/, workboxSW.strategies.networkFirst({}
 `
 
 app()
-.then(chunks)
-.then(bundles)
-.then(app => fs.writeFileSync(target, swSnippet(JSON.stringify(app.precaches, null, 2)), 'utf8'))
+  .then(chunks)
+  .then(bundles)
+  .then(app => {
+    fs.writeFileSync(target, swSnippet(JSON.stringify(app.precaches, null, 2)), 'utf8', () => {
+      console.log(`Precached these assets: ${app.precaches}`)
+    })
+  })
