@@ -1,6 +1,4 @@
 const WorkBoxWebpackPlugin = require('workbox-webpack-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-
 const isEmptyObject = require('is-empty-object')
 const path = require('path')
 
@@ -18,18 +16,6 @@ const workboxDefaults = {
   ]
 }
 
-const preCacheDefaults = {
-  verbose: false,
-  minify: true,
-  staticFileGlobsIgnorePatterns: [/\.next\//],
-  runtimeCaching: [
-    {
-      handler: 'networkFirst',
-      urlPattern: /^https?.*/
-    }
-  ]
-}
-
 module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack (config, options) {
@@ -39,21 +25,9 @@ module.exports = (nextConfig = {}) => {
         )
       }
 
-      const { swPreCacheOptions = {}, UNSAFE_workbox = false } = nextConfig || config || options
+      const { worboxOpts = workboxDefaults } = nextConfig || config || options
 
-      const opts = isEmptyObject(swPreCacheOptions)
-        ? preCacheDefaults
-        : Object.assign({}, defaultOpts, swPreCacheOptions)
-
-      if (UNSAFE_workbox) {
-        config.plugins.push(
-          new WorkBoxWebpackPlugin({ ...workboxDefaults, ...opts })
-        )
-      } else {
-        config.plugins.push(
-          new SWPrecacheWebpackPlugin(opts)
-        )
-      }
+      config.plugins.push(new WorkBoxWebpackPlugin({ ...workboxDefaults }))
 
       const originalEntry = config.entry
 
@@ -61,7 +35,7 @@ module.exports = (nextConfig = {}) => {
         const entries = await originalEntry()
 
         if (entries['main.js']) {
-          entries['main.js'].unshift(require.resolve(opts.registerPath ? opts.registerPath : './sw.js'))
+          entries['main.js'].unshift(require.resolve('./register-sw.js'))
         }
 
         return entries

@@ -9,7 +9,6 @@ const target = path.resolve(process.cwd(), './.next/service-worker.js')
 function bundles (app) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${dotNext}/bundles/pages`, (err, files) => {
-
       if (err) {
         resolve(app)
       }

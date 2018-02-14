@@ -1,17 +1,15 @@
 # next-offline
 
-Use [sw-precache](https://github.com/GoogleChrome/sw-precache) with [Next.js](https://github.com/zeit/next.js)
+Use [workbox](https://github.com/GoogleChrome/workbox) with [Next.js](https://github.com/zeit/next.js)
 
 ## Installation
 
-```
-npm install --save next-offline
+```sh
+$ npm install --save next-offline
 ```
 
-or
-
-```
-yarn add next-offline
+```sh
+$ yarn add next-offline
 ```
 
 ## Usage
@@ -21,6 +19,7 @@ Create a `next.config.js` in your project
 ```js
 // next.config.js
 const withOffline = require('next-offline')
+
 module.exports = withOffline()
 ```
 
@@ -44,6 +43,7 @@ app.prepare()
 
       if (pathname === '/service-worker.js') {
         const filePath = join(__dirname, '.next', pathname)
+
         app.serveStatic(req, res, filePath)
       } else {
         handle(req, res, parsedUrl)
@@ -70,12 +70,14 @@ module.exports = withOffline({
 
 ## Options
 
-The default object passed to [sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin) is here:
+The default object passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/get-started/webpack) is here:
 ```js
 {
-  verbose: false,
-  minify: true,
-  staticFileGlobsIgnorePatterns: [/\.next\//],
+  globDirectory: '.next',
+  globPatterns: ['**/*.{html,js}'],
+  swDest: path.join('.next', 'sw.js'),
+  clientsClaim: true,
+  skipWaiting: true,
   runtimeCaching: [
     {
       handler: 'networkFirst',
@@ -85,31 +87,37 @@ The default object passed to [sw-precache-webpack-plugin](https://github.com/gol
 }
 ```
 
-It can easily be modified by passing a `swPreCacheOptions` object to `withOffline` in your `next.config.js`
+You can see an example
+
+It can easily be modified by passing a `workboxOpts` object to `withOffline` in your `next.config.js`
 
 ```js
 // next.config.js
 const withOffline = require('next-offline')
 module.exports = withOffline({
-  swPreCacheOptions: {
-    verbose: true,
-    minify: false
+  workboxOpts: {
+    ...
   }
 })
 ```
 
-## Custom Service worker register script
-By default `next-offline` will register a service worker with the script below, this is automatically be add to your client side bundle once `nextOffline` is invoked.
+<!-- ## Custom Service worker register script -->
+By default `next-offline` will register a service worker with the script below
+<!-- , this is automatically be add to your client side bundle once `nextOffline` is invoked. -->
 
 ```js
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/service-worker.js')
-    .then(registration => console.info('service worker registration successful'))
-    .catch(err => console.warn('service worker registration failed', err.message))
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('SW registered: ', registration)
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError)
+    })
+  })
 }
 ```
 
+<!--
 You can pass in your own custom service worker register script by using the `registerPath` option like this:
 
 ```js
@@ -118,11 +126,9 @@ const withOffline = require('next-offline')
 const { resolve } = require('path')
 
 module.exports = withOffline({
-  swPreCacheOptions: {
-    registerPath: resolve(__dirname, 'my-service-worker.js')
-  }
+  swPath: resolve(__dirname, 'my-service-worker.js')
 })
-```
+``` -->
 
 Questions? Feedback? [Please let me know](https://github.com/hanford/next-offline/issues/new)
 
