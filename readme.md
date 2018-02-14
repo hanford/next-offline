@@ -76,7 +76,7 @@ module.exports = withOffline({
 
 ## Options
 
-The default object passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/get-started/webpack) is here:
+The default object passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin-WorkboxBuildWebpackPlugin) is here:
 ```js
 {
   globDirectory: '.next',
