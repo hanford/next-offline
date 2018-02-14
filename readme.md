@@ -55,6 +55,12 @@ app.prepare()
   })
 ```
 
+Finally modify your `npm build` script to look like this
+
+```sh
+"build": "next build && node node_modules/next-offline/precache.js"
+```
+
 Optionally you can add your custom Next.js configuration as parameter
 
 ```js
