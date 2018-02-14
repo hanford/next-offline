@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const globby = require('globby')
 const loadJsonFile = require('load-json-file');
 
 const dotNext = path.resolve(process.cwd(), './.next')

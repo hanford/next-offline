@@ -20,7 +20,8 @@
     "networkFirst",
     "cacheFirst",
     "webpack",
-    "workbox"
+    "workbox",
+    "sw-helpers"
   ],
   "keywords": [
     "react",
@@ -31,15 +32,14 @@
     "networkFirst",
     "cacheFirst",
     "webpack",
-    "workbox"
+    "workbox",
+    "sw-helpers"
   ],
   "peerDependencies": {
     "next": "~5.0.0",
     "react": "~16.2.0"
   },
   "dependencies": {
-    "globby": "~8.0.0",
-    "is-empty-object": "~1.1.1",
     "load-json-file": "~4.0.0",
     "workbox-webpack-plugin": "~2.1.2"
   }

@@ -1,5 +1,4 @@
 const WorkBoxWebpackPlugin = require('workbox-webpack-plugin')
-const isEmptyObject = require('is-empty-object')
 const path = require('path')
 
 const workboxDefaults = {
