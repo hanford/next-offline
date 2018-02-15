@@ -79,8 +79,6 @@ module.exports = withOffline({
 }
 ```
 
-You can see an example
-
 It can easily be modified by passing a `offlineOpts` object to `withOffline` in your `next.config.js`
 
 ```js
