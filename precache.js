@@ -1,99 +1,62 @@
-const fs = require('fs')
-const path = require('path')
-const loadJsonFile = require('load-json-file');
+const { readdir } = require('fs')
+const { join, resolve } = require('path')
 
-const dotNext = path.resolve(process.cwd(), './.next')
-const target = path.resolve(process.cwd(), './.next/service-worker.js')
+function getBundles (app) {
+  return new Promise(done => {
+    readdir(`${app.nextDir}/bundles/pages`, (err, files = []) => {
+      if (err) return done(app)
 
-function bundles (app) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(`${dotNext}/bundles/pages`, (err, files) => {
-      if (err) {
-        resolve(app)
-      }
+      const { bundle } = getDirectories(app.buildId)
 
-      if (files) {
-        const root = `/_next/${app.buildId}/page`
-        app.precaches = app.precaches.concat(files
-          .filter(hasJS)
-          .map(file => {
-            // req /_next/22321e97-8895-48db-b915-82e255f3faa8/new
-            return path.join(root, file)
-          })
-        )
-      }
+      app.precaches = [
+        ...app.precaches,
+        ...createPaths(files, bundle)
+      ]
 
-      resolve(app)
+      done(app)
     })
   })
 }
 
-function chunks (app) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(`${dotNext}/chunks`, (err, files) => {
-      if (err) {
-        resolve(app)
-      }
+function getChunks (app) {
+  return new Promise(done => {
+    readdir(`${app.nextDir}/chunks`, (err, files = []) => {
+      if (err) return done(app)
 
-      if (files) {
-        const root = `/_next/webpack/chunks`
-        app.precaches = app.precaches.concat(files
-          .filter(hasJS)
-          .map(file => {
-            // req /_next/webpack/chunks/22321e97-8895-48db-b915-82e255f3faa8.js
-            return path.join(root, file)
-          })
-        )
-      }
+      const { chunk: chunkDir } = getDirectories(app.buildId)
 
-      resolve(app)
+      app.precaches = [
+        ...app.precaches,
+        ...createPaths(files, chunkDir)
+      ]
+
+      done(app)
     })
   })
 }
 
-const hasJS = file => /\.js$/.test(file)
-
-function app() {
+module.exports = async function Precache (dir, id) {
   const app = {
-    buildId: fs.readFileSync(`${dotNext}/BUILD_ID`, 'utf8'),
-    precaches: []
+    buildId: id,
+    precaches: [],
+    nextDir: resolve(join(dir || './', '.next'))
   }
 
-  return loadJsonFile(`${dotNext}/build-stats.json`).then(stats => {
-    Object.keys(stats).map(src => {
-      // /_next/9265fa769281943ee96625770433e573/app.js
-      app.precaches.push(`/_next/${stats[src].hash}/${src}`)
-    })
+  await getChunks(app)
+  await getBundles(app)
 
-    return app
-  })
+  return app
 }
 
-const swSnippet = (precache) =>
-`
-importScripts('https://unpkg.com/workbox-sw@2.1.2/build/importScripts/workbox-sw.prod.v2.1.2.js');
+const hasJs = file => /\.js$/.test(file)
 
-const workboxSW = new WorkboxSW({
-  "skipWaiting": true,
-  "clientsClaim": true
-});
+function getDirectories (id) {
+  return {
+    chunk: '/_next/webpack/chunks',
+    bundle: `/_next/${id}/page`
+  }
+}
 
-// set precahe listed item
-workboxSW.precache(${precache})
-
-workboxSW.router.registerRoute(
-  '/',
-  workboxSW.strategies.staleWhileRevalidate()
-)
-
-workboxSW.router.registerRoute(/^https?.*/, workboxSW.strategies.networkFirst({}), 'GET');
-`
-
-app()
-  .then(chunks)
-  .then(bundles)
-  .then(app => {
-    fs.writeFileSync(target, swSnippet(JSON.stringify(app.precaches, null, 2)), 'utf8', () => {
-      console.log(`Precached these assets: ${app.precaches}`)
-    })
-  })
+function createPaths (files, path) {
+  return files.filter(hasJs).map(file => join(path, file))
+}

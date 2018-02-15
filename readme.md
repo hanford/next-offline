@@ -55,12 +55,6 @@ app.prepare()
   })
 ```
 
-Finally modify your `npm build` script to look like this
-
-```sh
-"build": "next build && node node_modules/next-offline/precache.js"
-```
-
 Optionally you can add your custom Next.js configuration as parameter
 
 ```js
@@ -76,32 +70,24 @@ module.exports = withOffline({
 
 ## Options
 
-The default object passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin-WorkboxBuildWebpackPlugin) is here:
+<!-- The default object passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin-WorkboxBuildWebpackPlugin) is here: -->
 ```js
 {
-  globDirectory: '.next',
-  globPatterns: ['**/*.{html,js}'],
-  swDest: path.join('.next', 'sw.js'),
-  clientsClaim: true,
-  skipWaiting: true,
-  runtimeCaching: [
-    {
-      handler: 'networkFirst',
-      urlPattern: /^https?.*/
-    }
-  ]
+  filename: 'service-worker.js',
+  placeholder: '${precache}',
+  serviceWorker: ''
 }
 ```
 
 You can see an example
 
-It can easily be modified by passing a `workboxOpts` object to `withOffline` in your `next.config.js`
+It can easily be modified by passing a `offlineOpts` object to `withOffline` in your `next.config.js`
 
 ```js
 // next.config.js
 const withOffline = require('next-offline')
 module.exports = withOffline({
-  workboxOpts: {
+  offlineOpts: {
     ...
   }
 })

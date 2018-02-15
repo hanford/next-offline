@@ -40,7 +40,6 @@
     "react": "~16.2.0"
   },
   "dependencies": {
-    "load-json-file": "~4.0.0",
     "workbox-webpack-plugin": "~2.1.2"
   }
 }
