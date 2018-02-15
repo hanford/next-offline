@@ -1,11 +1,6 @@
 const SwGen = require('./plugin')
+const { GenerateSW } = require('workbox-webpack-plugin')
 const path = require('path')
-
-const offlineDefaults = {
-  filename: 'service-worker.js',
-  placeholder: '${precache}',
-  serviceWorker: ''
-}
 
 module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
@@ -17,9 +12,16 @@ module.exports = (nextConfig = {}) => {
         )
       }
 
-      const { offlineOpts = offlineDefaults } = nextConfig || config || options
+      const {
+        workboxOpts = {
+          runtimeCaching: [
+            { urlPattern: /^https?.*/, handler: 'networkFirst' }
+          ]
+        }
+      } = nextConfig || config || options
 
-      config.plugins.push(new SwGen({ ...offlineOpts, buildId }))
+      config.plugins.push(new GenerateSW({ ...workboxOpts }))
+      config.plugins.push(new SwGen({ buildId }))
 
       const originalEntry = config.entry
 
