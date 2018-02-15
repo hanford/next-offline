@@ -74,7 +74,7 @@ If you want to customize your generated service worker, define a `workboxOpts` o
 
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
 ```js
-{ urlPattern: /^https?.*/, handler: 'networkFirst' }
+{ urlPattern: /^https?.*/, handler: 'networkFirst' } // default cache strategy
 ```
 
 
