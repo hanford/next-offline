@@ -1,32 +1,33 @@
-const fs = require('fs')
-const path = require('path')
-const precache = require('./precache.js')
+const fs = require('fs-extra')
+const { join } = require('path')
+const nextFiles = require('./next-files.js')
 
-module.exports = class WebpackPlugin {
+module.exports = class NextFilePrecacherPlugin {
   constructor (opts) {
-    this.opts = Object.assign({
+    this.opts = {
       filename: 'service-worker.js',
-      placeholder: '${precache}',
-      serviceWorker: ''
-    }, opts)
-
-    if (!this.opts.serviceWorker) {
-      this.opts.serviceWorker = fs.readFileSync(path.resolve(__dirname, './sw-template.js'), 'utf8')
+      ...opts
     }
   }
 
   apply (compiler) {
     compiler.plugin('after-emit', (compilation, callback) => {
-      this.opts.filename = path.join(compiler.options.output.path, this.opts.filename)
+      this.opts.filename = join(compiler.options.output.path, this.opts.filename)
+      this.opts.outputPath = compiler.options.output.path
 
       callback()
     })
 
     compiler.plugin('done', async () => {
-      const manifest = await precache(null, this.opts.buildId)
-      const sw = this.opts.serviceWorker.replace(this.opts.placeholder, JSON.stringify(manifest.precaches, null, 2))
+      const manifest = await nextFiles(this.opts.buildId)
+      const genSw = await fs.readFile(join(this.opts.outputPath, 'service-worker.js'), 'utf8')
 
-      fs.writeFileSync(this.opts.filename, sw, 'utf8')
+      const newSw =
+        `self.__precacheManifest = ${JSON.stringify(manifest.precaches, null, 2)}`
+        + '\n'
+        + genSw.replace(genSw.match(/"precache-manifest.*/)[0], '')
+
+      return await fs.writeFile(this.opts.filename, newSw, 'utf8')
     }, err => {
       throw new Error(`Precached failed: ${err.toString()}`)
     })
