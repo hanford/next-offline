@@ -4,10 +4,12 @@ const path = require('path')
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
-  webpack (config, { buildId, ...options }) {
+  webpack (config, { buildId, dev, ...options }) {
     if (!options.defaultLoaders) {
       throw new Error('This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade')
     }
+
+    if (dev) return config
 
     const {
       workboxOpts = {
