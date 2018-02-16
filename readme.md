@@ -28,11 +28,11 @@ Then create a `server.js`, because we'll need to serve out service worker.
 ```js
 // server.js
 const { createServer } = require('http')
-const next = require('next')
-const { parse } = require('url')
 const { join } = require('path')
+const { parse } = require('url')
+const next = require('next')
 
-const app = next({ dev: process.env.NODE_ENV !== 'production' })
+const app = next()
 const handle = app.getRequestHandler()
 
 app.prepare()
@@ -81,6 +81,7 @@ By default `next-offline` has the following blanket runtime caching strategy. If
 ```js
 // next.config.js
 const withOffline = require('next-offline')
+
 module.exports = withOffline({
   workboxOpts: {
     runtimeCaching: [
