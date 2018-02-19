@@ -119,6 +119,8 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
+This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
+
 Questions? Feedback? [Please let me know](https://github.com/hanford/next-offline/issues/new)
 
 ## License (MIT)

@@ -12,6 +12,7 @@ module.exports = (nextConfig = {}) => ({
     if (dev) return config
 
     const {
+      dontAutoRegisterSw = false,
       workboxOpts = {
         runtimeCaching: [
           { urlPattern: /^https?.*/, handler: 'networkFirst' }
@@ -30,7 +31,7 @@ module.exports = (nextConfig = {}) => ({
     config.entry = async () => {
       const entries = await originalEntry()
 
-      if (entries['main.js']) {
+      if (entries['main.js'] && !dontAutoRegisterSw) {
         entries['main.js'].unshift(require.resolve('./register-sw.js'))
       }
 
