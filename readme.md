@@ -94,9 +94,10 @@ module.exports = withOffline({
         handler: 'networkFirst',
         options: {
           cacheableResponse: {
-          statuses: [0, 200],
-          headers: {
-            'x-test': 'true'
+            statuses: [0, 200],
+            headers: {
+              'x-test': 'true'
+            }
           }
         }
       }
