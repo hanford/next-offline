@@ -1,5 +1,5 @@
 const SwGen = require('./plugin')
-const { GenerateSW } = require('workbox-webpack-plugin')
+const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin')
 const path = require('path')
 
 module.exports = (nextConfig = {}) => ({
@@ -16,6 +16,7 @@ module.exports = (nextConfig = {}) => ({
     if (options.dev) return config
 
     const {
+      generateSw = true,
       dontAutoRegisterSw = false,
       workboxOpts = {
         runtimeCaching: [
@@ -26,7 +27,9 @@ module.exports = (nextConfig = {}) => ({
 
     config.plugins = [
       ...config.plugins,
-      new GenerateSW({ ...workboxOpts }),
+      generateSw
+        ? new GenerateSW({ ...workboxOpts })
+        : new InjectManifest({ ...workboxOpts }),
       new SwGen({ buildId: options.buildId })
     ]
 
