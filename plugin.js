@@ -22,10 +22,14 @@ module.exports = class NextFilePrecacherPlugin {
       const manifest = await nextFiles(this.opts.buildId)
       const genSw = await fs.readFile(join(this.opts.outputPath, 'service-worker.js'), 'utf8')
 
+      const multipleImportRegex = /"precache-manifest\.(.*?)\.js",\s/
+
       const newSw =
-        `self.__precacheManifest = ${JSON.stringify(manifest.precaches, null, 2)}`
-        + '\n'
-        + genSw.replace(genSw.match(/"precache-manifest.*/)[0], '')
+        `self.__precacheManifest = ${JSON.stringify(manifest.precaches)}\n${
+          multipleImportRegex.test(genSw)
+            ? genSw.replace(genSw.match(multipleImportRegex)[0], '')
+            : genSw.replace(genSw.match(/"precache-manifest.*/)[0], '')
+        }`
 
       return await fs.writeFile(this.opts.filename, newSw, 'utf8')
     }, err => {
