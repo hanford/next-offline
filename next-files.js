@@ -35,10 +35,10 @@ function getChunks (app) {
   })
 }
 
-module.exports = async function Precache (id) {
+module.exports = async function Precache ({ buildId, nextDir }) {
   const app = {
-    buildId: id,
-    nextDir: resolve(join('./', '.next')),
+    buildId,
+    nextDir,
     precaches: []
   }
 
