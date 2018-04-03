@@ -30,7 +30,7 @@ module.exports = (nextConfig = {}) => ({
       generateSw
         ? new GenerateSW({ ...workboxOpts })
         : new InjectManifest({ ...workboxOpts }),
-      new SwGen({ buildId: options.buildId })
+      new SwGen({ buildId: options.buildId, assetPrefix: options.config.assetPrefix })
     ]
 
     const originalEntry = config.entry

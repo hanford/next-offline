@@ -10,7 +10,7 @@ function getBundles (app) {
 
       app.precaches = [
         ...app.precaches,
-        ...createPaths(files, bundle, app.buildId)
+        ...createPaths(files, bundle, app.buildId, app.assetPrefix)
       ]
 
       done(app)
@@ -27,7 +27,7 @@ function getChunks (app) {
 
       app.precaches = [
         ...app.precaches,
-        ...createPaths(files, chunkDir, app.buildId)
+        ...createPaths(files, chunkDir, app.buildId, app.assetPrefix)
       ]
 
       done(app)
@@ -35,10 +35,11 @@ function getChunks (app) {
   })
 }
 
-module.exports = async function Precache (id) {
+module.exports = async function Precache ({ buildId, nextDir, assetPrefix }) {
   const app = {
-    buildId: id,
-    nextDir: resolve(join('./', '.next')),
+    buildId,
+    nextDir,
+    assetPrefix,
     precaches: []
   }
 
@@ -57,6 +58,7 @@ function getDirectories (id) {
   }
 }
 
-function createPaths (files, path, id) {
-  return files.filter(hasJs).map(file => ({url: join(path, file), revision: id}))
+function createPaths (files, path, id, assetPrefix) {
+  const prefix = assetPrefix || ''
+  return files.filter(hasJs).map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
 }
