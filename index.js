@@ -1,51 +1,13 @@
 const SwGen = require('./plugin')
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin')
 const path = require('path')
-const { readFile, writeFile } = require('fs-extra')
-const Precache = require('./next-files')
+
+const Export = require('./export')
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
-  async exportPathMap (toto, tatat,titi) {
-    if (!nextConfig.exportPathMap || typeof nextConfig.exportPathMap !== 'function') {
-      return {}
-    }
-
-
-    const nextDir = path.join(process.cwd(), '.next')
-    const buildIdPath = path.join(nextDir, 'BUILD_ID')
-    const buildId = await readFile(buildIdPath, 'utf8')
-
-    const { precaches } = await Precache({buildId, nextDir})
-
-    const outDir = path.join(process.cwd(), nextConfig.outDir || 'out')
-    const swDest = path.join(outDir , 'service-worker.js');
-
-    // globDirectory is intentionally left blank as it's required by workbox
-    await require('workbox-build').generateSW({
-      swDest,
-      globDirectory: ' ',
-      runtimeCaching: [
-        {
-          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
-          handler: 'cacheFirst',
-          options: {
-            expiration: {
-              maxEntries: 20,
-            }
-          }
-        }, {
-          urlPattern: /^https?.*/,
-          handler: 'networkFirst'
-        }
-      ]
-    })
-
-    const serviceWorkerContent = await readFile(swDest, 'utf8')
-    const newServiceWorkerContent = `self.__precacheManifest = ${JSON.stringify(precaches)};\n${serviceWorkerContent}`;
-    writeFile(swDest, newServiceWorkerContent)
-
-    return nextConfig.exportPathMap()
+  async exportPathMap () {
+    return await Export(nextConfig)
   },
   webpack (config, options) {
     if (!options.defaultLoaders) {
