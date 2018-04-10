@@ -10,7 +10,7 @@ async function Export (nextConfig) {
   const { worboxOpts, exportPathMap } = nextConfig
 
   const {
-    generateSw = true,
+    // generateSw = true,
     // dontAutoRegisterSw = false,
     workboxOpts = {
       runtimeCaching: [
