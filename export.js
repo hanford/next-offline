@@ -7,11 +7,8 @@ const { join } = require('path')
 module.exports = Export
 
 async function Export (nextConfig) {
-  const { worboxOpts, exportPathMap } = nextConfig
-
   const {
-    // generateSw = true,
-    // dontAutoRegisterSw = false,
+    exportPathMap,
     workboxOpts = {
       runtimeCaching: [
         { urlPattern: /^https?.*/, handler: 'networkFirst' }
@@ -32,9 +29,10 @@ async function Export (nextConfig) {
   const outDir = join(process.cwd(), nextConfig.outDir || 'out')
   const swDest = join(outDir , 'service-worker.js')
 
+  await generateSW({ swDest, globDirectory: ' ', ...workboxOpts })
+
   // if (generateSw) {
     // globDirectory is intentionally left blank as it's required by workbox
-  await generateSW({ swDest, globDirectory: ' ', ...workboxOpts })
   // } else {
   //   await injectManifest({ swDest, globDirectory: ' ', ...workboxOpts })
   // }
