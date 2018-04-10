@@ -32,8 +32,6 @@ async function Export (nextConfig) {
   const outDir = join(process.cwd(), nextConfig.outDir || 'out')
   const swDest = join(outDir , 'service-worker.js')
 
-  console.log(workboxOpts.swSrc)
-
   // if (generateSw) {
     // globDirectory is intentionally left blank as it's required by workbox
   await generateSW({ swDest, globDirectory: ' ', ...workboxOpts })
