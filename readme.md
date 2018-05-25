@@ -110,10 +110,10 @@ By default `next-offline` will register a service worker with the script below, 
 
 ```js
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
       console.log('SW registered: ', registration)
-    }).catch(registrationError => {
+    }).catch(function (registrationError) {
       console.log('SW registration failed: ', registrationError)
     })
   })
