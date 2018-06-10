@@ -8,6 +8,7 @@ module.exports = Export
 
 async function Export (nextConfig) {
   const {
+    distDir = '.next',
     exportPathMap,
     workboxOpts = {
       runtimeCaching: [
@@ -20,7 +21,7 @@ async function Export (nextConfig) {
     return {}
   }
 
-  const nextDir = join(process.cwd(), '.next')
+  const nextDir = join(process.cwd(), distDir)
   const buildIdPath = join(nextDir, 'BUILD_ID')
   const buildId = await readFile(buildIdPath, 'utf8')
 
