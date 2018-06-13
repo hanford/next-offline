@@ -54,7 +54,7 @@ const hasJs = file => /\.js$/.test(file)
 function getDirectories (id) {
   return {
     chunk: '/_next/webpack/chunks',
-    bundle: `/_next/${id}/page`
+    bundle: `_next/${id}/page`
   }
 }
 
