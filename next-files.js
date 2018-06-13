@@ -58,7 +58,7 @@ function getDirectories (id) {
   }
 }
 
-function createPaths (files, path, id, assetPrefix) {
-  const prefix = assetPrefix || ''
+function createPaths (files, path, id, assetPrefix = '') {
+  const prefix = assetPrefix === '/' ? '' : assetPrefix;
   return files.filter(hasJs).map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
 }
