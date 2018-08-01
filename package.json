@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "fs-extra": "~5.0.0",
+    "glob": "^7.0.0",
     "minimist": "1.2.0",
     "webpack": "~3.11.0",
     "workbox-build": "~3.2.0",
