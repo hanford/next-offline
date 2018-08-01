@@ -1,9 +1,9 @@
-const { readdir } = require('fs')
-const { join, resolve } = require('path')
+const glob = require('glob')
+const { join } = require('path')
 
 function getBundles (app) {
   return new Promise(done => {
-    readdir(`${app.nextDir}/bundles/pages`, (err, files = []) => {
+    glob('**/*.js', { cwd: `${app.nextDir}/bundles/pages` }, (err, files = []) => {
       if (err) return done(app)
 
       const { bundle } = getDirectories(app.buildId)
@@ -20,7 +20,7 @@ function getBundles (app) {
 
 function getChunks (app) {
   return new Promise(done => {
-    readdir(`${app.nextDir}/chunks`, (err, files = []) => {
+    glob('**/*.js', { cwd: `${app.nextDir}/chunks` }, (err, files = []) => {
       if (err) return done(app)
 
       const { chunk: chunkDir } = getDirectories(app.buildId)
@@ -49,8 +49,6 @@ module.exports = async function Precache ({ buildId, nextDir, assetPrefix }) {
   return app
 }
 
-const hasJs = file => /\.js$/.test(file)
-
 function getDirectories (id) {
   return {
     chunk: '/_next/webpack/chunks',
@@ -60,5 +58,5 @@ function getDirectories (id) {
 
 function createPaths (files, path, id, assetPrefix) {
   const prefix = assetPrefix || ''
-  return files.filter(hasJs).map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
+  return files.map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
 }
