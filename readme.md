@@ -122,7 +122,7 @@ if ('serviceWorker' in navigator) {
 
 This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
 
-By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` options. This is particularly useful if you want to test web push notifications in development, for example.
+By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` option. This is particularly useful if you want to test web push notifications in development, for example.
 
 ```js
 // next.config.js
