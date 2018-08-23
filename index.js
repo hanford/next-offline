@@ -1,5 +1,6 @@
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { join } = require('path')
 
 const SwGen = require('./plugin')
 const Export = require('./export')
@@ -30,7 +31,7 @@ module.exports = (nextConfig = {}) => ({
     if (options.dev) {
       // Simply copy development service worker.
       config.plugins.push(new CopyWebpackPlugin([devSwSrc]))
-    } else (!options.isServer) {
+    } else if (!options.isServer) {
       // Only run once for the client build.
       config.plugins.push(
         generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
