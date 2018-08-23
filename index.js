@@ -21,6 +21,8 @@ module.exports = (nextConfig = {}) => ({
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
       workboxOpts = {
+        globPatterns: ['static/**/*'],
+        globDirectory: '.',
         runtimeCaching: [
           { urlPattern: /^https?.*/, handler: 'networkFirst' }
         ]
