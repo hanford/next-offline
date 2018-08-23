@@ -1,7 +1,7 @@
 const { readFile, writeFile } = require('fs-extra')
 const Precache = require('./next-files')
 const { generateSW, injectManifest } = require('workbox-build')
-const { join } = require('path')
+const { join, resolve } = require('path')
 const parseArgs = require('minimist')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -30,7 +30,7 @@ async function Export (nextConfig) {
     default: { o: null },
   })
   const dir = argv._[0] || '.'
-  const outDir = join(process.cwd(), argv.outdir || 'out')
+  const outDir = argv.outdir ? resolve(argv.outdir) : resolve(dir, 'out')
 
   const nextDir = join(process.cwd(), dir, distDir)
   const buildIdPath = join(nextDir, 'BUILD_ID')
