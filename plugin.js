@@ -19,7 +19,7 @@ module.exports = class NextFilePrecacherPlugin {
     })
 
     compiler.plugin('done', async () => {
-      const manifest = await nextFiles({
+      const precacheFiles = await nextFiles({
         buildId: this.opts.buildId,
         nextDir: this.opts.outputPath,
         assetPrefix: this.opts.assetPrefix
@@ -29,7 +29,7 @@ module.exports = class NextFilePrecacherPlugin {
       const multipleImportRegex = /"precache-manifest\.(.*?)\.js",\s/
 
       const newSw =
-        `self.__precacheManifest = ${JSON.stringify(manifest.precaches)}\n${
+        `self.__precacheManifest = ${JSON.stringify(precacheFiles, null, 2)};\n\n${
           multipleImportRegex.test(genSw)
             ? genSw.replace(genSw.match(multipleImportRegex)[0], '')
             : genSw.replace(genSw.match(/"precache-manifest.*/)[0], '')

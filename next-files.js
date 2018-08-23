@@ -1,62 +1,39 @@
 const glob = require('glob')
 const { join } = require('path')
 
-function getBundles (app) {
-  return new Promise(done => {
-    glob('**/*.js', { cwd: `${app.nextDir}/bundles/pages` }, (err, files = []) => {
-      if (err) return done(app)
+module.exports = async function getNextFiles(options) {
+  return [
+    ...(await precacheFiles(options, 'bundles/pages', '**/*.js')),
+    ...(await precacheFiles(options, 'chunks', '**/*.js')),
+    ...(await precacheFiles(options, 'static', '**/*.{js,css}')),
+  ]
+}
 
-      const { bundle } = getDirectories(app.buildId)
+function precacheFiles(options, basePath, globPattern) {
+  const { buildId, assetPrefix, nextDir } = options
+  const cwd = join(nextDir, basePath)
 
-      app.precaches = [
-        ...app.precaches,
-        ...createPaths(files, bundle, app.buildId, app.assetPrefix)
-      ]
+  return new Promise((resolve, reject) => {
+    glob(globPattern, { cwd }, (err, files = []) => {
+      if (err) {
+        return reject(err)
+      }
 
-      done(app)
+      const exportPath = exportPathMap(buildId)[basePath]
+      const precache = createPrecache(files, exportPath, buildId, assetPrefix)
+      resolve(precache)
     })
   })
 }
 
-function getChunks (app) {
-  return new Promise(done => {
-    glob('**/*.js', { cwd: `${app.nextDir}/chunks` }, (err, files = []) => {
-      if (err) return done(app)
-
-      const { chunk: chunkDir } = getDirectories(app.buildId)
-
-      app.precaches = [
-        ...app.precaches,
-        ...createPaths(files, chunkDir, app.buildId, app.assetPrefix)
-      ]
-
-      done(app)
-    })
-  })
-}
-
-module.exports = async function Precache ({ buildId, nextDir, assetPrefix }) {
-  const app = {
-    buildId,
-    nextDir,
-    assetPrefix,
-    precaches: []
-  }
-
-  await getChunks(app)
-  await getBundles(app)
-
-  return app
-}
-
-function getDirectories (id) {
+function exportPathMap(id) {
   return {
-    chunk: '/_next/webpack/chunks',
-    bundle: `/_next/${id}/page`
+    'bundles/pages': `/_next/${id}/page`,
+    chunks: '/_next/webpack/chunks',
+    static: `/_next/static`,
   }
 }
 
-function createPaths (files, path, id, assetPrefix) {
-  const prefix = assetPrefix || ''
-  return files.map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
+function createPrecache(files, path, id, prefix = '') {
+  return files.map(file => ({ url: join(prefix, path, file), revision: id }))
 }
