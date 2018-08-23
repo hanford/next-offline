@@ -122,6 +122,16 @@ if ('serviceWorker' in navigator) {
 
 This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
 
+By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` options. This is particularly useful if you want to test web push notifications in development, for example.
+
+```js
+// next.config.js
+const withOffline = require('next-offline')
+
+module.exports = withOffline({
+  devSwSrc: '/path/to/my/dev/service-worker.js'
+})
+```
 
 #### next export
 If you're using `next export` you'll need to specify an [exportPathMap function](https://github.com/zeit/next.js#static-html-export)
