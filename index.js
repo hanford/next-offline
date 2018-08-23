@@ -24,6 +24,8 @@ module.exports = (nextConfig = {}) => ({
       generateSw = true,
       dontAutoRegisterSw = false,
       workboxOpts = {
+        globPatterns: ['static/**/*'],
+        globDirectory: '.',
         runtimeCaching: [
           { urlPattern: /^https?.*/, handler: 'networkFirst' }
         ]

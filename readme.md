@@ -122,6 +122,21 @@ if ('serviceWorker' in navigator) {
 
 This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
 
+By default `next-offline` will precache all the Next.js webpack emitted files and the user-defined static ones (inside `/static`) - essentially everything that is exported as well.
+
+If you'd like to include some more or change the origin of your static files use the given workbox options:
+
+```js
+workboxOpts: {
+  globPatterns: ['app/static/**/*', 'any/other/fileglob/to/cache'],
+  globDirectory: '.',
+  modifyUrlPrefix: {
+    'app': assetPrefix,
+  },
+  runtimeCaching: {...}
+}
+```
+
 
 #### next export
 If you're using `next export` you'll need to specify an [exportPathMap function](https://github.com/zeit/next.js#static-html-export)
