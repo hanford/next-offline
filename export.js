@@ -1,9 +1,10 @@
-const path = require('path')
 const { readFile, writeFile } = require('fs-extra')
 const Precache = require('./next-files')
 const { generateSW, injectManifest } = require('workbox-build')
 const { join } = require('path')
 const parseArgs = require('minimist')
+
+const dev = process.env.NODE_ENV !== 'production'
 
 module.exports = Export
 
@@ -18,7 +19,7 @@ async function Export (nextConfig) {
     }
   } = nextConfig
 
-  if (typeof exportPathMap !== 'function') {
+  if (dev || typeof exportPathMap !== 'function') {
     return {}
   }
 
