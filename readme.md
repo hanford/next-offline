@@ -122,6 +122,7 @@ if ('serviceWorker' in navigator) {
 
 This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
 
+
 By default `next-offline` will precache all the Next.js webpack emitted files and the user-defined static ones (inside `/static`) - essentially everything that is exported as well.
 
 If you'd like to include some more or change the origin of your static files use the given workbox options:
@@ -135,6 +136,18 @@ workboxOpts: {
   },
   runtimeCaching: {...}
 }
+```
+
+
+By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` option. This is particularly useful if you want to test web push notifications in development, for example.
+
+```js
+// next.config.js
+const withOffline = require('next-offline')
+
+module.exports = withOffline({
+  devSwSrc: '/path/to/my/dev/service-worker.js'
+})
 ```
 
 

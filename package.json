@@ -39,6 +39,7 @@
     "next": "^5.0.0 || ^6.0.0"
   },
   "dependencies": {
+    "copy-webpack-plugin": "~4.5.2",
     "fs-extra": "~5.0.0",
     "glob": "~7.0.0",
     "minimist": "1.2.0",
