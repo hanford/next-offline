@@ -26,7 +26,7 @@ module.exports = class NextFilePrecacherPlugin {
         assetPrefix: this.opts.assetPrefix
       })
 
-      // Prepend/inline newly renerated precache manifest and remove import for old one.
+      // Prepend/inline newly generated precache manifest and remove import for old one.
       const manifestImportRegex = /(,\s*)?"precache-manifest\..*\.js"/
       const newSw = `self.__precacheManifest = ${JSON.stringify(
         newPrecacheManifest,
