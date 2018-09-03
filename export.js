@@ -12,6 +12,7 @@ async function Export (nextConfig) {
   const {
     distDir = '.next',
     exportPathMap,
+    generateSw = true,
     workboxOpts = {
       runtimeCaching: [
         { urlPattern: /^https?.*/, handler: 'networkFirst' }
@@ -40,13 +41,14 @@ async function Export (nextConfig) {
 
   const swDest = join(outDir , 'service-worker.js')
 
-  await generateSW({ swDest, globDirectory: ' ', ...workboxOpts })
-
-  // if (generateSw) {
+  if (generateSw) {
     // globDirectory is intentionally left blank as it's required by workbox
-  // } else {
-  //   await injectManifest({ swDest, globDirectory: ' ', ...workboxOpts })
-  // }
+    await generateSW({ swDest, globDirectory: ' ', ...workboxOpts })
+  } else {
+    // So that the same file works as part of `next build` and `next export`
+    const injectionPointRegexp = /(__precacheManifest\s*=\s*)\[\](.*)/
+    await injectManifest({ swDest, globDirectory: ' ', injectionPointRegexp, ...workboxOpts, })
+  }
 
   const serviceWorkerContent = await readFile(swDest, 'utf8')
   const newServiceWorkerContent = `self.__precacheManifest = ${JSON.stringify(precaches)};\n${serviceWorkerContent}`
