@@ -1,5 +1,5 @@
-const { join } = require('path')
 const glob = require('glob')
+const { join } = require('path')
 
 module.exports = async function getNextFiles(options) {
   return [
@@ -35,5 +35,5 @@ function exportPathMap(id) {
 }
 
 function createPrecache(files, path, id, prefix = '') {
-  return files.map(file => ({url: `${prefix}${join(path, file)}`, revision: id}))
+  return files.map(file => ({ url: `${prefix}${join(path, file)}`, revision: id }))
 }
