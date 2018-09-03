@@ -19,21 +19,20 @@ module.exports = class NextFilePrecacherPlugin {
     })
 
     compiler.plugin('done', async () => {
-      const precacheFiles = await nextFiles({
+      const sw = await fs.readFile(join(this.opts.outputPath, 'service-worker.js'), 'utf8')
+      const newPrecacheManifest = await nextFiles({
         buildId: this.opts.buildId,
         nextDir: this.opts.outputPath,
         assetPrefix: this.opts.assetPrefix
       })
-      const genSw = await fs.readFile(join(this.opts.outputPath, 'service-worker.js'), 'utf8')
 
-      const multipleImportRegex = /"precache-manifest\.(.*?)\.js",\s/
-
-      const newSw =
-        `self.__precacheManifest = ${JSON.stringify(precacheFiles, null, 2)};\n\n${
-          multipleImportRegex.test(genSw)
-            ? genSw.replace(genSw.match(multipleImportRegex)[0], '')
-            : genSw.replace(genSw.match(/"precache-manifest.*/)[0], '')
-        }`
+      // Prepend/inline newly generated precache manifest and remove import for old one.
+      const manifestImportRegex = /(,\s*)?"precache-manifest\..*\.js"/
+      const newSw = `self.__precacheManifest = ${JSON.stringify(
+        newPrecacheManifest,
+        null,
+        2,
+      )};\n\n${sw.replace(manifestImportRegex, '')}`
 
       return await fs.writeFile(this.opts.filename, newSw, 'utf8')
     }, err => {
