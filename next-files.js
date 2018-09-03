@@ -35,5 +35,5 @@ function exportPathMap(id) {
 }
 
 function createPrecache(files, path, id, prefix = '') {
-  return files.map(file => ({ url: join(prefix, path, file), revision: id }))
+  return files.map(file => ({ url: `${prefix}${join(path, file)}`, revision: id }))
 }
