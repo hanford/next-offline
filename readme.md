@@ -152,7 +152,10 @@ module.exports = withOffline({
 
 
 #### next export
-If you're using `next export` you'll need to specify an [exportPathMap function](https://github.com/zeit/next.js#static-html-export)
+
+In next-offline@3.0.0 we've rewritten the export functionality to work in more cases, more reliably, with less code thanks to some of the additions in Next 7.0.0!
+
+You can read more about exporting at [Next.js docs]((https://github.com/zeit/next.js#static-html-export)) but next offline should Just Work™️.
 
 <hr />
 
