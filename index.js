@@ -1,19 +1,18 @@
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { join } = require('path');
 
-const SwGen = require('./plugin');
-const Export = require('./export');
+const InlineNextPrecacheManifestPlugin = require('./plugin');
+const exportSw = require('./export');
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
-  async exportPathMap() {
-    return await Export(nextConfig);
-  },
+  exportPathMap: exportSw(nextConfig),
   webpack(config, options) {
     if (!options.defaultLoaders) {
       throw new Error(
-        'This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade'
+        'This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade',
       );
     }
 
@@ -25,8 +24,8 @@ module.exports = (nextConfig = {}) => ({
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
-        runtimeCaching: [{ urlPattern: /^https?.*/, handler: 'networkFirst' }]
-      }
+        runtimeCaching: [{ urlPattern: /^https?.*/, handler: 'networkFirst' }],
+      },
     } = nextConfig;
 
     // Generate SW
@@ -36,10 +35,14 @@ module.exports = (nextConfig = {}) => ({
     } else if (!options.isServer) {
       // Only run once for the client build.
       config.plugins.push(
-        generateSw
-          ? new GenerateSW({ ...workboxOpts })
-          : new InjectManifest({ ...workboxOpts }),
-        new SwGen({ buildId: options.buildId, assetPrefix })
+        new CleanWebpackPlugin(['precache-manifest.*.js'], { root: config.output.path }),
+        generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
+        new InlineNextPrecacheManifestPlugin({
+          outputPath: config.output.path,
+          urlPrefix: assetPrefix,
+          manifestDest: 'precache-manifest.*.js',
+          swDest: workboxOpts.swDest || 'service-worker.js',
+        }),
       );
     }
 
@@ -58,5 +61,5 @@ module.exports = (nextConfig = {}) => ({
     }
 
     return config;
-  }
+  },
 });
