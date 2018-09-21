@@ -7,7 +7,7 @@ const { join } = require('path');
 function exportSw(nextConfig) {
   return async function exportPathMap(...args) {
     const [defaultPathMap, { dev, distDir, outDir }] = args;
-    const swDest = nextConfig.workboxOpts.swDest || 'service-worker.js';
+    const swDest = (nextConfig.workboxOpts && nextConfig.workboxOpts.swDest) || 'service-worker.js';
 
     if (dev) {
       return defaultPathMap;
