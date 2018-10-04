@@ -19,7 +19,7 @@ async function generateNextManifest(options) {
   const swFilePath = join(options.outputPath, options.swDest);
 
   const originalManifest = await getOriginalManifest(manifestFilePath);
-  const nextManifest = buildNextManifest(originalManifest, options.assetPrefix);
+  const nextManifest = buildNextManifest(originalManifest, options.urlPrefix);
   await inlineManifest(nextManifest, swFilePath, options.manifestDest);
 }
 
