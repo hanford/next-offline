@@ -1,6 +1,23 @@
-# next-offline
+<p align="center">
+  <strong>📶 next-offline</strong>
+</p>
 
-Use [Workbox](https://github.com/GoogleChrome/workbox) with [Next.js](https://github.com/zeit/next.js) and easily enable offline functionality in your application.
+<p align="center">
+Use <a href='https://github.com/GoogleChrome/workbox'>Workbox</a> with <a href='https://github.com/zeit/next.js'>
+Next.js</a> and <br />easily enable offline functionality in your application!
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/next-offline">
+    <img src="https://img.shields.io/npm/dy/next-offline.svg">
+  </a>
+  <a href="https://www.npmjs.com/package/next-offline">
+    <img src="https://img.shields.io/npm/v/next-offline.svg?maxAge=3600&label=next-offline&colorB=007ec6">
+  </a>
+  <img src="https://img.shields.io/github/repo-size/hanford/next-offline.svg" />
+</p>
+
+<br/>
 
 ## Installation
 
