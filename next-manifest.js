@@ -51,7 +51,7 @@ async function inlineManifest(manifest, swFilePath, precachePath) {
   const originalSw = await readFile(swFilePath, 'utf8');
 
   // Prepend/inline newly generated precache manifest and remove import for old one.
-  const manifestImportRegex = new RegExp(`(,\s*)?"${precachePath}"`);
+  const manifestImportRegex = new RegExp(`(,\s*)?"${precachePath}"(,\s*)?`);
   const newSw = `self.__precacheManifest = ${JSON.stringify(
     manifest,
     null,
