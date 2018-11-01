@@ -4,6 +4,8 @@ const { join } = require('path');
 
 const nextUrlPrefix = '/_next/';
 const excludeFiles = ['react-loadable-manifest.json', 'build-manifest.json'];
+const manifestDest = 'precache-manifest.*.js';
+const manifestImportRegex = /(,\s*(\r\n|\r|\n)\s*)?"precache-manifest\.[^.]*\.js"(,\s*)?/;
 
 /**
  * Workbox already generates a pretty good precache manifest for all the emitted
@@ -15,12 +17,12 @@ const excludeFiles = ['react-loadable-manifest.json', 'build-manifest.json'];
  * At the end replace old manifest reference with new inlined one.
  */
 async function generateNextManifest(options) {
-  const manifestFilePath = join(options.outputPath, options.manifestDest);
+  const manifestFilePath = join(options.outputPath, manifestDest);
   const swFilePath = join(options.outputPath, options.swDest);
 
   const originalManifest = await getOriginalManifest(manifestFilePath);
   const nextManifest = buildNextManifest(originalManifest, options.urlPrefix);
-  await inlineManifest(nextManifest, swFilePath, options.manifestDest);
+  await inlineManifest(nextManifest, swFilePath);
 }
 
 function getOriginalManifest(manifestFilePath) {
@@ -47,11 +49,10 @@ function buildNextManifest(originalManifest, urlPrefix = '') {
   }));
 }
 
-async function inlineManifest(manifest, swFilePath, precachePath) {
+async function inlineManifest(manifest, swFilePath) {
   const originalSw = await readFile(swFilePath, 'utf8');
 
   // Prepend/inline newly generated precache manifest and remove import for old one.
-  const manifestImportRegex = new RegExp(`(,\s*)?"${precachePath}"`);
   const newSw = `self.__precacheManifest = ${JSON.stringify(
     manifest,
     null,
