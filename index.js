@@ -40,7 +40,6 @@ module.exports = (nextConfig = {}) => ({
         new InlineNextPrecacheManifestPlugin({
           outputPath: config.output.path,
           urlPrefix: assetPrefix,
-          manifestDest: 'precache-manifest.*.js',
           swDest: workboxOpts.swDest || 'service-worker.js',
         }),
       );
