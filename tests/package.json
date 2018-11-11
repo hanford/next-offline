@@ -12,7 +12,7 @@
     "next": "7.0.2",
     "next-compose-plugins": "^2.1.1",
     "next-manifest": "^1.6.0",
-    "next-offline": "^3.0.4",
+    "next-offline": "^3.0.8",
     "react": "16.6.1",
     "react-dom": "16.6.1",
     "rimraf": "^2.6.2"
