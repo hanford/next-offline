@@ -14,6 +14,16 @@
   "contributors": [
     "Joao Vieira <joaoguerravieira@gmail.com>"
   ],
+  "files": [
+    "export.js",
+    "index.js",
+    "next-manifest.js",
+    "plugin.js",
+    "register.js",
+    "service-worker.js",
+    "readme.md",
+    "package.json"
+  ],
   "tags": [
     "react",
     "next.js",
