@@ -6,7 +6,7 @@ const forceProd = require('./forceProd')
 
 const manifest = {
   "short_name": "next-offline-test-app",
-  "name": "WithBoth",
+  "name": "next-offline-test-app",
   "description": "Reproduce a bug to help fix it",
   "dir": "ltr",
   "lang": "en",
@@ -23,7 +23,7 @@ const manifest = {
   "background_color": "#ffffff"
 }
 
-const hasManifest = withManifest({ manifest })
-const hasOffline = withOffline(hasManifest)
-
-module.exports = hasOffline
+module.exports = withPlugins([
+  [withManifest({ manifest })],
+  [withOffline]
+])
