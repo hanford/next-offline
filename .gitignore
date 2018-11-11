@@ -1,1 +1,4 @@
 node_modules/
+tests/.next
+*.log
+tests/static/manifest

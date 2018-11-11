@@ -22,7 +22,8 @@
     "register-sw.js",
     "service-worker.js",
     "readme.md",
-    "package.json"
+    "package.json",
+    "yarn.lock"
   ],
   "tags": [
     "react",
