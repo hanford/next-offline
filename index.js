@@ -2,7 +2,7 @@ const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { join } = require('path');
-const fs = require('fs');
+const { readFile, writeFile } = require('fs-extra');
 
 const InlineNextPrecacheManifestPlugin = require('./plugin');
 const exportSw = require('./export');
@@ -52,13 +52,10 @@ module.exports = (nextConfig = {}) => ({
     config.entry = async () => {
       const entries = await originalEntry();
       if (entries['main.js'] && !dontAutoRegisterSw) {
-        let content = fs.readFileSync(require.resolve('./register-sw.js'), 'utf8');
+        let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
         content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
 
-        fs.writeFileSync(join(__dirname, 'register-sw-compiled.js'), content, {
-          encoding: 'utf8',
-          flag: 'w',
-        });
+        await writeFile(join(__dirname, 'register-sw-compiled.js'), content, 'utf8');
 
         entries['main.js'].unshift(require.resolve('./register-sw-compiled.js'));
       }
