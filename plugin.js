@@ -6,14 +6,26 @@ module.exports = class InlineNextPrecacheManifestPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin(
-      'done',
-      async () => {
-        await generateNextManifest(this.opts);
-      },
-      err => {
-        throw new Error(`Precached failed: ${err.toString()}`);
-      },
-    );
+    if (compiler.hooks) {
+      compiler.hooks.done.tap(
+        'CopyPlugin',
+        async () => {
+          await generateNextManifest(this.opts);
+        },
+        err => {
+          throw new Error(`Precached failed: ${err.toString()}`);
+        },
+      );
+    } else {
+      compiler.plugin(
+        'done',
+        async () => {
+          await generateNextManifest(this.opts);
+        },
+        err => {
+          throw new Error(`Precached failed: ${err.toString()}`);
+        },
+      );
+    }
   }
 };
