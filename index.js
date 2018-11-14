@@ -2,6 +2,7 @@ const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { join } = require('path');
+const fs = require('fs');
 
 const InlineNextPrecacheManifestPlugin = require('./plugin');
 const exportSw = require('./export');
@@ -21,6 +22,7 @@ module.exports = (nextConfig = {}) => ({
       generateSw = true,
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
+      registerSwPrefix = assetPrefix || '',
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
@@ -50,7 +52,15 @@ module.exports = (nextConfig = {}) => ({
     config.entry = async () => {
       const entries = await originalEntry();
       if (entries['main.js'] && !dontAutoRegisterSw) {
-        entries['main.js'].unshift(require.resolve('./register-sw.js'));
+        let content = fs.readFileSync(require.resolve('./register-sw.js'), 'utf8');
+        content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
+
+        fs.writeFileSync(join(__dirname, 'register-sw-compiled.js'), content, {
+          encoding: 'utf8',
+          flag: 'w',
+        });
+
+        entries['main.js'].unshift(require.resolve('./register-sw-compiled.js'));
       }
       return entries;
     };
