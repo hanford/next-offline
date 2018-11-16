@@ -3,3 +3,4 @@ tests/.next
 *.log
 tests/node_modules
 tests/static/manifest/
+register-sw-compiled.js
