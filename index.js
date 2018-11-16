@@ -22,7 +22,7 @@ module.exports = (nextConfig = {}) => ({
       generateSw = true,
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
-      registerSwPrefix = assetPrefix || '',
+      registerSwPrefix = '',
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
