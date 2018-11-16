@@ -91,7 +91,11 @@ If you want to customize your generated service worker, define a `workboxOpts` o
 
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
 ```js
-{ urlPattern: /^https?.*/, handler: 'networkFirst' } // default cache strategy
+{
+  globPatterns: ['static/**/*'],
+  globDirectory: '.',
+  { urlPattern: /^https?.*/, handler: 'networkFirst' }
+}
 ```
 
 
@@ -139,6 +143,7 @@ if ('serviceWorker' in navigator) {
 
 This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
 
+If your application doesn't live on the root of your domain, you can use `registerSwPrefix`. This is helpful if your application is on domain.com/my/custom/path because by default `next-offline` assumes your application is on domain.com and will try to register domain.com/service-worker.js. We can't support using `assetPrefix` because service workers must be served on the root domain. For a technical breakdown on that limitation, see the following link: [Is it possible to serve service workers from CDN/remote origin?](https://github.com/w3c/ServiceWorker/issues/940)
 
 By default `next-offline` will precache all the Next.js webpack emitted files and the user-defined static ones (inside `/static`) - essentially everything that is exported as well.
 
