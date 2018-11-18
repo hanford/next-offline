@@ -6,7 +6,7 @@ module.exports = (nextConfig = {}) => {
         isServer: false,
         dev: false
       }
-      console.log({ options})
+
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, newOptions);
       }

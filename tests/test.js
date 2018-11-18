@@ -4,7 +4,6 @@
 const nextBuild = require("next/dist/build");
 const withManifest = require("next-manifest");
 const withOffline = require("next-offline");
-const { withPlugins } = require("next-compose-plugins");
 
 const util = require("util");
 const { join } = require("path");
@@ -27,53 +26,13 @@ beforeEach(() => {
   ]);
 });
 
-test("build next app", () => {
-  const nextConf = {};
-  return nextBuild.default(cwd, nextConf);
-});
-
-test("builds next app without next-offline, only next-manifest", () => {
-  const NAME = "WithManifest";
-
-  const nextConf = forceProd(withManifest({ manifest: { name: NAME } }));
-
-  return nextBuild
-    .default(cwd, nextConf)
-    .then(() => {
-      return read(join(cwd, "static/manifest/manifest.json"), "utf8");
-    })
-    .then(str => {
-      const manifest = JSON.parse(str);
-      expect(manifest.name).toBe(NAME);
-    });
-});
-
-test("build next app with service worker", () => {
-  const nextConf = withOffline();
-
-  return nextBuild.default(cwd, nextConf).then(() => {
-    return Promise.all([
-      access(join(cwd, ".next/service-worker.js"), fs.constants.F_OK),
-      read(join(cwd, ".next/main.js"), "utf8").then(str => {
-        expect(str).toEqual(expect.stringContaining("serviceWorker"));
-      })
-    ]);
-  });
-});
-
 test("build next app with manifest and service worker", () => {
   const NAME = "WithBoth";
   const manifest = {
     name: NAME
   };
-
-  const nextConf = withOffline(forceProd(withManifest({ manifest })));
-
-  // const nextConf = withPlugins([
-  //   [withManifest, { manifest }],
-  //   [forceProd],
-  //   [withOffline]
-  // ])
+  
+  const nextConf = forceProd(withOffline(withManifest({ manifest })));
 
   return nextBuild.default(cwd, nextConf).then(() => {
     return Promise.all([
