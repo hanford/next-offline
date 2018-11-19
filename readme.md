@@ -160,11 +160,12 @@ class App extends React.Component {
 If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
 ```js
 // next.config.js
-const withOffline = require('next-offline)
+const withOffline = require('next-offline')
 
 module.exports = withOffline({ dontAutoRegisterSw: true })
 ```
 
+### Service worker path
 If your application doesn't live on the root of your domain, you can use `registerSwPrefix`. This is helpful if your application is on domain.com/my/custom/path because by default `next-offline` assumes your application is on domain.com and will try to register domain.com/service-worker.js. We can't support using `assetPrefix` because service workers must be served on the root domain. For a technical breakdown on that limitation, see the following link: [Is it possible to serve service workers from CDN/remote origin?](https://github.com/w3c/ServiceWorker/issues/940)
 
 By default `next-offline` will precache all the Next.js webpack emitted files and the user-defined static ones (inside `/static`) - essentially everything that is exported as well.
@@ -182,7 +183,7 @@ workboxOpts: {
 }
 ```
 
-
+### next-offline during development
 By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` option. This is particularly useful if you want to test web push notifications in development, for example.
 
 ```js
