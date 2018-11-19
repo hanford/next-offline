@@ -1,4 +1,4 @@
-export function unregister() {
+function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();
@@ -6,7 +6,7 @@ export function unregister() {
   }
 }
 
-export function register(swPath = '/service-worker.js') {
+function register(swPath = '/service-worker.js') {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register(swPath)
@@ -17,4 +17,9 @@ export function register(swPath = '/service-worker.js') {
         console.log('SW registration failed: ', registrationError);
       });
   }
+}
+
+module.exports = {
+  unregister,
+  register
 }
