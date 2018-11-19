@@ -1,8 +1,8 @@
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { join } = require('path');
 const { readFile, writeFile } = require('fs-extra');
+const { join } = require('path');
 
 const InlineNextPrecacheManifestPlugin = require('./plugin');
 const exportSw = require('./export');

@@ -25,5 +25,5 @@ const manifest = {
 
 module.exports = withPlugins([
   [withManifest({ manifest })],
-  [withOffline]
+  [withOffline, { dontAutoRegisterSw: true }]
 ])
