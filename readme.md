@@ -127,6 +127,7 @@ module.exports = withOffline({
 })
 ```
 
+### Compile time mode
 By default `next-offline` will register a service worker with the script below, this is automatically added to your client side bundle once `withOffline` is invoked.
 
 ```js
@@ -141,7 +142,28 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
-This behavior can be disabled by passing in `dontAutoRegisterSw: true` to top level config object.
+### Runtime mode
+Alternative to compile time, you can take control of registering/unregistering in your application code by importing `next-offline/runtime`
+
+```js
+import { register, unregister } from 'next-offline/runtime'
+
+class App extends React.Component {
+  componentDidMount () {
+    register()
+  }
+
+  ..
+}
+```
+
+If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
+```js
+// next.config.js
+const withOffline = require('next-offline)
+
+module.exports = withOffline({ dontAutoRegisterSw: true })
+```
 
 If your application doesn't live on the root of your domain, you can use `registerSwPrefix`. This is helpful if your application is on domain.com/my/custom/path because by default `next-offline` assumes your application is on domain.com and will try to register domain.com/service-worker.js. We can't support using `assetPrefix` because service workers must be served on the root domain. For a technical breakdown on that limitation, see the following link: [Is it possible to serve service workers from CDN/remote origin?](https://github.com/w3c/ServiceWorker/issues/940)
 
