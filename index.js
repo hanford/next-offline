@@ -37,7 +37,7 @@ module.exports = (nextConfig = {}) => ({
     } else if (!options.isServer) {
       // Only run once for the client build.
       config.plugins.push(
-        new CleanWebpackPlugin(['precache-manifest.*.js'], { root: config.output.path }),
+        new CleanWebpackPlugin(['precache-manifest.*.js'], { root: config.output.path, verbose: false }),
         generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
         new InlineNextPrecacheManifestPlugin({
           outputPath: config.output.path,
