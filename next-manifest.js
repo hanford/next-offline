@@ -45,7 +45,7 @@ function getOriginalManifest(manifestFilePath) {
 
 function buildNextManifest(originalManifest, urlPrefix = '') {
   return originalManifest.filter(entry => !excludeFiles.includes(entry.url)).map(entry => ({
-    url: `${urlPrefix}${nextUrlPrefix}${entry.url}`,
+    url: `${urlPrefix}${nextUrlPrefix}${entry.url.replace(/\\/g, '\/')}`,
   }));
 }
 
