@@ -94,7 +94,7 @@ By default `next-offline` has the following blanket runtime caching strategy. If
 {
   globPatterns: ['static/**/*'],
   globDirectory: '.',
-  { urlPattern: /^https?.*/, handler: 'networkFirst' }
+  runtimeCaching: { urlPattern: /^https?.*/, handler: 'networkFirst' }
 }
 ```
 
