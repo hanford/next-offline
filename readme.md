@@ -1,6 +1,6 @@
-<p align="center">
-  <strong>📶 next-offline</strong>
-</p>
+<h1 align="center">
+  next-offline
+</h1>
 
 <p align="center">
 Use <a href='https://github.com/GoogleChrome/workbox'>Workbox</a> with <a href='https://github.com/zeit/next.js'>
@@ -37,13 +37,32 @@ Create a `next.config.js` in your project
 // next.config.js
 const withOffline = require('next-offline')
 
-module.exports = withOffline()
+const nextConfig = {
+  ...
+}
+
+module.exports = withOffline(nextConfig)
 ```
 
-Then create a `server.js`, because we'll need to serve out service worker.
+## Documentation
+- [Serving service worker](#serving-service-worker)
+  - [Now 1.0](#now-1.0)
+  - [Now 2.0](#now-2.0)
+- [Registering service worker](#registering-service-worker)
+  - [compile-time registration](#compile-time-registration)
+  - [runtime registration](#runtime-registration)
+- [Cache Strategies](#cache-strategies)
+- [Customizing service worker](#customizing-service-worker)
+  - [workboxOpts](#workboxOpts)
+  - [next-offline options](#next-offline-options)
+- [Development mode](#development-mode)
 
+## Serving service worker
+Because service workers are so powerful, the API has some restrictions built in. For example, service workers must be served on the domain they're being used on - [you can't use a CDN](https://github.com/w3c/ServiceWorker/issues/940).
+
+### Now 1.0
+You'll want to use the next.js custom server API. The easiest way to do that is creating a `server.js` that looks like this:
 ```js
-// server.js
 const { createServer } = require('http')
 const { join } = require('path')
 const { parse } = require('url')
@@ -58,6 +77,7 @@ app.prepare()
       const parsedUrl = parse(req.url, true)
       const { pathname } = parsedUrl
 
+      // handle GET request to /service-worker.js
       if (pathname === '/service-worker.js') {
         const filePath = join(__dirname, '.next', pathname)
 
@@ -71,24 +91,72 @@ app.prepare()
     })
   })
 ```
+You can  read more about custom servers in the [Next.js docs](https://github.com/zeit/next.js#custom-server-and-routing)
 
-Optionally you can add your custom Next.js configuration as parameter
+### Now 2.0
+Because Now 2.0 works so different than the former version, so does serving the service worker. There are a few different ways to do this, but I'd recommend a set up 
+
+## Registering service worker
+### Compile-time registration
+By default `next-offline` will register a service worker with the script below, this is automatically added to your client side bundle once `withOffline` is invoked.
+
+```js
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+      console.log('SW registered: ', registration)
+    }).catch(function (registrationError) {
+      console.log('SW registration failed: ', registrationError)
+    })
+  })
+}
+```
+
+### Runtime registration
+Alternative to compile-time, you can take control of registering/unregistering in your application code by importing `next-offline/runtime`
+
+```js
+import { register, unregister } from 'next-offline/runtime'
+
+class App extends React.Component {
+  componentDidMount () {
+    register()
+  }
+  componentWillUnmount () {
+    unregister()
+  }
+  ..
+}
+```
+
+If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
+```js
+// next.config.js
+const withOffline = require('next-offline')
+
+module.exports = withOffline({ dontAutoRegisterSw: true })
+```
+
+## Customizing service worker
+
+### Using workbox
+
+Define a `workboxOpts` object in your `next.config.js` and it will gets passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generatesw_plugin). Workbox is what `next-offline` uses under the hood to generate the service worker, you can learn more about it [here](https://developers.google.com/web/tools/workbox/).
 
 ```js
 // next.config.js
 const withOffline = require('next-offline')
 
-module.exports = withOffline({
-  webpack(config, options) {
-    return config
+const nextConfig = {
+  workboxOpts: {
+    ...
   }
-})
+}
+
+module.exports = withOffline(nextConfig)
 ```
 
-## Options
-
-If you want to customize your generated service worker, define a `workboxOpts` object in your `next.config.js` and it will gets passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generatesw_plugin)
-
+## Cache strategies
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
 ```js
 {
@@ -127,44 +195,6 @@ module.exports = withOffline({
 })
 ```
 
-### Compile time mode
-By default `next-offline` will register a service worker with the script below, this is automatically added to your client side bundle once `withOffline` is invoked.
-
-```js
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
-      console.log('SW registered: ', registration)
-    }).catch(function (registrationError) {
-      console.log('SW registration failed: ', registrationError)
-    })
-  })
-}
-```
-
-### Runtime mode
-Alternative to compile time, you can take control of registering/unregistering in your application code by importing `next-offline/runtime`
-
-```js
-import { register, unregister } from 'next-offline/runtime'
-
-class App extends React.Component {
-  componentDidMount () {
-    register()
-  }
-
-  ..
-}
-```
-
-If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
-```js
-// next.config.js
-const withOffline = require('next-offline')
-
-module.exports = withOffline({ dontAutoRegisterSw: true })
-```
-
 ### Service worker path
 If your application doesn't live on the root of your domain, you can use `registerSwPrefix`. This is helpful if your application is on domain.com/my/custom/path because by default `next-offline` assumes your application is on domain.com and will try to register domain.com/service-worker.js. We can't support using `assetPrefix` because service workers must be served on the root domain. For a technical breakdown on that limitation, see the following link: [Is it possible to serve service workers from CDN/remote origin?](https://github.com/w3c/ServiceWorker/issues/940)
 
@@ -183,7 +213,7 @@ workboxOpts: {
 }
 ```
 
-### next-offline during development
+## Development mode
 By default `next-offline` will add a no-op service worker in development. If you want to provide your own pass its filepath to `devSwSrc` option. This is particularly useful if you want to test web push notifications in development, for example.
 
 ```js
