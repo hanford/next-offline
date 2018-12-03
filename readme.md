@@ -53,7 +53,7 @@ module.exports = withOffline(nextConfig)
   - [runtime registration](#runtime-registration)
 - [Cache Strategies](#cache-strategies)
 - [Customizing service worker](#customizing-service-worker)
-  - [workboxOpts](#workboxOpts)
+  - [workboxOpts](#using-workbox)
   - [next-offline options](#next-offline-options)
 - [Development mode](#development-mode)
 
@@ -94,7 +94,7 @@ app.prepare()
 You can  read more about custom servers in the [Next.js docs](https://github.com/zeit/next.js#custom-server-and-routing)
 
 ### Now 2.0
-Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this starter repo](https://github.com/hanford/next-offline-now2).
+Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/examples/now2).
 
 The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline-now2)
 
