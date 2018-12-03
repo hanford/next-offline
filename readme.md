@@ -94,7 +94,9 @@ app.prepare()
 You can  read more about custom servers in the [Next.js docs](https://github.com/zeit/next.js#custom-server-and-routing)
 
 ### Now 2.0
-Because Now 2.0 works so different than the former version, so does serving the service worker. There are a few different ways to do this, but I'd recommend a set up 
+Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this starter repo](https://github.com/hanford/next-offline-now2).
+
+The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline-now2)
 
 ## Registering service worker
 ### Compile-time registration
@@ -113,7 +115,7 @@ if ('serviceWorker' in navigator) {
 ```
 
 ### Runtime registration
-Alternative to compile-time, you can take control of registering/unregistering in your application code by importing `next-offline/runtime`
+Alternative to compile-time, you can take control of registering/unregistering in your application code by using the `next-offline/runtime` module.
 
 ```js
 import { register, unregister } from 'next-offline/runtime'
@@ -155,6 +157,51 @@ const nextConfig = {
 
 module.exports = withOffline(nextConfig)
 ```
+
+### next-offline options
+On top of the workbox options, next-offline has some options built in flags to give you finer grain control over how your service worker gets generated.
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>generateSw</td>
+      <td>Boolean</td>
+      <td>If false, next-offline will not generate a service worker and will instead try to modify workboxOpts.swSrc</td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td>dontAutoRegisterSw</td>
+      <td>Boolean</td>
+      <td>If true, next-offline won't automatically push the registration script into the application code. This is required if you're using runtime registration or are handling registration on your own.</td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td>devSwSrc</td>
+      <td>String</td>
+      <td>Path to be registered by next-offline during development. By default next-offline will register a noop during development</td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td>registerSwPrefix</td>
+      <td>String</td>
+      <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js</td>
+      <td>false</td>
+    </tr>
+  </tbody>
+</table>
+<!-- assetPrefix,
+generateSw = true,
+dontAutoRegisterSw = false,
+devSwSrc = join(__dirname, 'service-worker.js'),
+registerSwPrefix = '', -->
 
 ## Cache strategies
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
