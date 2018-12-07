@@ -201,7 +201,7 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>scope</td>
       <td>String</td>
       <td>This is passed to the automatically registered service worker allowing increase or decrease what the service worker has control of.</td>
-      <td>false</td>
+      <td>"/"</td>
     </tr>
   </tbody>
 </table>
