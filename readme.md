@@ -98,8 +98,6 @@ You can  read more about custom servers in the [Next.js docs](https://github.com
 ### Now 2.0
 Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/examples/now2). The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline/blob/master/examples/now2/now.json) and [next.config.js](https://github.com/hanford/next-offline/blob/master/examples/now2/next.config.js).
 
-The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline-now2)
-
 ## Registering service worker
 ### Compile-time registration
 By default `next-offline` will register a service worker with the script below, this is automatically added to your client side bundle once `withOffline` is invoked.
