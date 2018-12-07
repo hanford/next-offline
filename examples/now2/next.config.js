@@ -1,6 +1,12 @@
-const nextOffline = require('next-offline')
+const withOffline = moduleExists('next-offline')
+? require('next-offline')
+: {};
 
-module.exports = nextOffline({
+const isDev = process.env.NODE_ENV !== 'production'
+
+
+const nextConfig = {
+  dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
@@ -21,4 +27,17 @@ module.exports = nextOffline({
       },
     ],
   },
-})
+}
+
+
+module.exports = moduleExists('next-offline')
+  ? withOffline(nextConfig)
+  : nextConfig
+
+function moduleExists(name) {
+  try {
+    return require.resolve(name);
+  } catch (error) {
+    return false;
+  }
+}
