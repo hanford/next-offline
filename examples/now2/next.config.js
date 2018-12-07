@@ -1,9 +1,6 @@
 const withOffline = moduleExists('next-offline')
-? require('next-offline')
-: {};
-
-const isDev = process.env.NODE_ENV !== 'production'
-
+  ? require('next-offline')
+  : {};
 
 const nextConfig = {
   dontAutoRegisterSw: true,
@@ -28,7 +25,6 @@ const nextConfig = {
     ],
   },
 }
-
 
 module.exports = moduleExists('next-offline')
   ? withOffline(nextConfig)
