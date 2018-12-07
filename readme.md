@@ -55,7 +55,9 @@ module.exports = withOffline(nextConfig)
 - [Customizing service worker](#customizing-service-worker)
   - [workboxOpts](#using-workbox)
   - [next-offline options](#next-offline-options)
+- [next export](#next-export)
 - [Development mode](#development-mode)
+- [License](#license-(mit))
 
 ## Serving service worker
 Because service workers are so powerful, the API has some restrictions built in. For example, service workers must be served on the domain they're being used on - [you can't use a CDN](https://github.com/w3c/ServiceWorker/issues/940).
@@ -274,7 +276,7 @@ module.exports = withOffline({
 ```
 
 
-#### next export
+## next export
 
 In next-offline@3.0.0 we've rewritten the export functionality to work in more cases, more reliably, with less code thanks to some of the additions in Next 7.0.0!
 
