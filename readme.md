@@ -94,7 +94,7 @@ app.prepare()
 You can  read more about custom servers in the [Next.js docs](https://github.com/zeit/next.js#custom-server-and-routing)
 
 ### Now 2.0
-Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/examples/now2).
+Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/examples/now2). The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline/blob/master/examples/now2/now.json) and [next.config.js](https://github.com/hanford/next-offline/blob/master/examples/now2/next.config.js).
 
 The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline-now2)
 
@@ -105,7 +105,7 @@ By default `next-offline` will register a service worker with the script below, 
 ```js
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).then(function (registration) {
       console.log('SW registered: ', registration)
     }).catch(function (registrationError) {
       console.log('SW registration failed: ', registrationError)
@@ -195,13 +195,14 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js</td>
       <td>false</td>
     </tr>
+    <tr>
+      <td>scope</td>
+      <td>String</td>
+      <td>This is passed to the automatically registered service worker allowing increase or decrease what the service worker has control of.</td>
+      <td>false</td>
+    </tr>
   </tbody>
 </table>
-<!-- assetPrefix,
-generateSw = true,
-dontAutoRegisterSw = false,
-devSwSrc = join(__dirname, 'service-worker.js'),
-registerSwPrefix = '', -->
 
 ## Cache strategies
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`

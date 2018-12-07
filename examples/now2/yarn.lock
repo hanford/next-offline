@@ -2865,9 +2865,9 @@ neo-async@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
 
-next-offline@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-3.2.2.tgz#6ac416c98287120a296a6f681f083e99155c23b4"
+next-offline@3.3.0-beta.0:
+  version "3.3.0-beta.0"
+  resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-3.3.0-beta.0.tgz#9eec746ed2e69e30f9f80419a223ffeb58ff963c"
   dependencies:
     clean-webpack-plugin "^0.1.19"
     copy-webpack-plugin "~4.5.2"

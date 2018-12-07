@@ -3,7 +3,6 @@ const withOffline = moduleExists('next-offline')
   : {};
 
 const nextConfig = {
-  dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: 'static/service-worker.js',
     runtimeCaching: [

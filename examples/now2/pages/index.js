@@ -1,7 +1,7 @@
 export default () => (
   <>
     <div className="hero">
-    <h1 className="title">Welcome to Next.js with Now 2.0</h1>
+    <h1 className="title">Offline Next.js with Now 2.0</h1>
     </div>
 
     <style jsx>{`
