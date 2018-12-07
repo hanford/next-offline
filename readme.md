@@ -51,10 +51,11 @@ module.exports = withOffline(nextConfig)
 - [Registering service worker](#registering-service-worker)
   - [compile-time registration](#compile-time-registration)
   - [runtime registration](#runtime-registration)
-- [Cache Strategies](#cache-strategies)
 - [Customizing service worker](#customizing-service-worker)
   - [workboxOpts](#using-workbox)
   - [next-offline options](#next-offline-options)
+- [Cache Strategies](#cache-strategies)
+- [Service worker path](#service-worker-path)
 - [next export](#next-export)
 - [Development mode](#development-mode)
 - [License](#license-(mit))
@@ -245,7 +246,7 @@ module.exports = withOffline({
 })
 ```
 
-### Service worker path
+## Service worker path
 If your application doesn't live on the root of your domain, you can use `registerSwPrefix`. This is helpful if your application is on domain.com/my/custom/path because by default `next-offline` assumes your application is on domain.com and will try to register domain.com/service-worker.js. We can't support using `assetPrefix` because service workers must be served on the root domain. For a technical breakdown on that limitation, see the following link: [Is it possible to serve service workers from CDN/remote origin?](https://github.com/w3c/ServiceWorker/issues/940)
 
 By default `next-offline` will precache all the Next.js webpack emitted files and the user-defined static ones (inside `/static`) - essentially everything that is exported as well.
