@@ -1,6 +1,6 @@
 const glob = require('glob');
 const { readFile, writeFile } = require('fs-extra');
-const { join } = require('path');
+const { resolve } = require('path');
 
 const nextUrlPrefix = '/_next/';
 const excludeFiles = ['react-loadable-manifest.json', 'build-manifest.json'];
@@ -17,8 +17,8 @@ const manifestImportRegex = /(,\s*(\r\n|\r|\n)\s*)?"precache-manifest\.[^.]*\.js
  * At the end replace old manifest reference with new inlined one.
  */
 async function generateNextManifest(options) {
-  const manifestFilePath = join(options.outputPath, manifestDest);
-  const swFilePath = join(options.outputPath, options.swDest);
+  const manifestFilePath = resolve(options.outputPath, manifestDest);
+  const swFilePath = resolve(options.outputPath, options.swDest);
 
   const originalManifest = await getOriginalManifest(manifestFilePath);
   const nextManifest = buildNextManifest(originalManifest, options.urlPrefix);
