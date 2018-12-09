@@ -4239,9 +4239,9 @@ next-manifest@^1.6.0:
     "@pwa/manifest" "^1.0.0"
     "@pwa/manifest-icons" "^2.1.0"
 
-next-offline@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-3.2.0.tgz#56bac038a0d32bed29afba29d4b41de2594cc913"
+next-offline@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-3.3.0.tgz#c2f5fb5ac90a6b76485c576eed0faa5eba107660"
   dependencies:
     clean-webpack-plugin "^0.1.19"
     copy-webpack-plugin "~4.5.2"
