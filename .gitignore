@@ -1,6 +1,6 @@
 node_modules/
-tests/.next
+*/.next
 *.log
-tests/node_modules
-tests/static/manifest/
+*/node_modules
+*/static/manifest/
 register-sw-compiled.js

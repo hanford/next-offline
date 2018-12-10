@@ -23,6 +23,7 @@ module.exports = (nextConfig = {}) => ({
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
       registerSwPrefix = '',
+      scope = '',
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
@@ -54,6 +55,7 @@ module.exports = (nextConfig = {}) => ({
       if (entries['main.js'] && !dontAutoRegisterSw) {
         let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
         content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
+        content = content.replace('{SW_SCOPE}', scope);
 
         await writeFile(join(__dirname, 'register-sw-compiled.js'), content, 'utf8');
 
