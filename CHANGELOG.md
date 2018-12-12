@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.1 2018-12-12
+
+- add `generateInDevMode` to next-offline options allowing service worker be generated and registered during development
+
 ## v3.3.0 2018-12-9
 
 - add `scope` to next-offline options allowing service worker scope to be modified for automatically registered service-workers
