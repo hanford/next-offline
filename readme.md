@@ -193,6 +193,12 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>false</td>
     </tr>
     <tr>
+      <td>generateInDevMode</td>
+      <td>Boolean</td>
+      <td>If true, the service worker will also be generated in development mode. Otherwise the service worker defined in devSwSrc will be used.</td>
+      <td>false</td>
+    </tr>
+    <tr>
       <td>registerSwPrefix</td>
       <td>String</td>
       <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js</td>
@@ -275,6 +281,8 @@ module.exports = withOffline({
   devSwSrc: '/path/to/my/dev/service-worker.js'
 })
 ```
+
+You can disable this behavior by setting the `generateInDevMode` option to `true`.
 
 
 ## next export
