@@ -24,6 +24,7 @@ module.exports = (nextConfig = {}) => ({
       devSwSrc = join(__dirname, 'service-worker.js'),
       registerSwPrefix = '',
       scope = '',
+      generateInDevMode = false,
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
@@ -32,7 +33,7 @@ module.exports = (nextConfig = {}) => ({
     } = nextConfig;
 
     // Generate SW
-    if (options.dev) {
+    if (options.dev && !generateInDevMode) {
       // Simply copy development service worker.
       config.plugins.push(new CopyWebpackPlugin([devSwSrc]));
     } else if (!options.isServer) {
