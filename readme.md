@@ -46,8 +46,8 @@ module.exports = withOffline(nextConfig)
 
 ## Documentation
 - [Serving service worker](#serving-service-worker)
-  - [Now 1.0](#now-1.0)
-  - [Now 2.0](#now-2.0)
+  - [Now 1.0](#now-10)
+  - [Now 2.0](#now-20)
 - [Registering service worker](#registering-service-worker)
   - [compile-time registration](#compile-time-registration)
   - [runtime registration](#runtime-registration)
