@@ -1,7 +1,11 @@
 
 # Changelog
 
-## v3.3.1 2019-01-05
+## v3.3.3 2019-01-05
+
+- remove arrow function in favor of function keyword in runtime.js to prevent IE11 exception
+
+## v3.3.2 2019-01-05
 
 - default scope option to `/`
 
