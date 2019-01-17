@@ -6,10 +6,10 @@ function unregister() {
   }
 }
 
-function register(swPath = '/service-worker.js') {
+function register(swPath) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-      .register(swPath)
+      .register(swPath || '/service-worker.js')
       .then(function(registration) {
         console.log('SW registered: ', registration);
       })
