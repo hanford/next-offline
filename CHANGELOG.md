@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.4 2019-01-17
+
+- remove default function argument in favor of an ES5 compatible way of defaulting
+
 ## v3.3.3 2019-01-05
 
 - remove arrow function in favor of function keyword in runtime.js to prevent IE11 exception
