@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.5 2019-01-18
+
+- remove object property shorthand syntax for more ES5 compatibility
+
 ## v3.3.4 2019-01-17
 
 - remove default function argument in favor of an ES5 compatible way of defaulting

@@ -20,6 +20,6 @@ function register(swPath) {
 }
 
 module.exports = {
-  unregister,
-  register
+  unregister: unregister,
+  register: register
 }
