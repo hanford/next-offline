@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "next": "^7.0.2",
-    "next-offline": "^3.3.0",
+    "next-offline": "latest",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   }
