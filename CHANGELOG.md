@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.6 2019-02-28
+
+- Ensure we're not modifying config.entry during development when generateInDev is false
+
 ## v3.3.5 2019-01-18
 
 - remove object property shorthand syntax for more ES5 compatibility

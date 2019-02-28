@@ -32,8 +32,10 @@ module.exports = (nextConfig = {}) => ({
       },
     } = nextConfig;
 
+    const skipDuringDevelopment = options.dev && !generateInDevMode
+
     // Generate SW
-    if (options.dev && !generateInDevMode) {
+    if (skipDuringDevelopment) {
       // Simply copy development service worker.
       config.plugins.push(new CopyWebpackPlugin([devSwSrc]));
     } else if (!options.isServer) {
@@ -49,21 +51,23 @@ module.exports = (nextConfig = {}) => ({
       );
     }
 
-    // Register SW
-    const originalEntry = config.entry;
-    config.entry = async () => {
-      const entries = await originalEntry();
-      if (entries['main.js'] && !dontAutoRegisterSw) {
-        let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
-        content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
-        content = content.replace('{SW_SCOPE}', scope);
-
-        await writeFile(join(__dirname, 'register-sw-compiled.js'), content, 'utf8');
-
-        entries['main.js'].unshift(require.resolve('./register-sw-compiled.js'));
-      }
-      return entries;
-    };
+    if (!skipDuringDevelopment) {
+      // Register SW
+      const originalEntry = config.entry;
+      config.entry = async () => {
+        const entries = await originalEntry();
+        if (entries['main.js'] && !dontAutoRegisterSw) {
+          let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
+          content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
+          content = content.replace('{SW_SCOPE}', scope);
+  
+          await writeFile(join(__dirname, 'register-sw-compiled.js'), content, 'utf8');
+  
+          entries['main.js'].unshift(require.resolve('./register-sw-compiled.js'));
+        }
+        return entries;
+      };
+    }
 
     if (typeof nextConfig.webpack === 'function') {
       return nextConfig.webpack(config, options);
