@@ -49,10 +49,12 @@ function getOriginalManifest(manifestFilePath) {
 }
 
 function buildNextManifest(originalManifest, urlPrefix = '') {
-  return originalManifest.filter(entry => !excludeFiles.includes(entry.url)).map(entry => ({
-    url: `${urlPrefix}${nextUrlPrefix}${entry.url}`,
-    revision: entry.revision
-  }));
+  return originalManifest
+    .filter(entry => !excludeFiles.includes(entry.url))
+    .map(entry => ({
+      url: `${urlPrefix}${nextUrlPrefix}${entry.url}`,
+      revision: entry.revision
+    }));
 }
 
 async function inlineManifest(manifest, swFilePath) {

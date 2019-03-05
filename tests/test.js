@@ -4,7 +4,7 @@
 
 const nextBuild = require('next/dist/build');
 const withManifest = require('next-manifest');
-const withOffline = require('next-offline');
+const withOffline = require('../');
 
 const util = require('util');
 const { join } = require('path');

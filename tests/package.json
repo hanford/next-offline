@@ -5,14 +5,15 @@
     "clean": "rm -rf .next static/manifest",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "test": "npm run clean && jest"
+    "test": "yarn clean && jest",
+    "export": "yarn build && next export"
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
     "next": "7.0.2",
     "next-compose-plugins": "^2.1.1",
     "next-manifest": "^1.6.0",
-    "next-offline": "^3.3.0",
+    "next-offline": "latest",
     "react": "16.6.1",
     "react-dom": "16.6.1",
     "rimraf": "^2.6.2"
