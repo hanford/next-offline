@@ -8,7 +8,7 @@
     "url": "https://github.com/hanford/next-offline.git"
   },
   "scripts": {
-    "test": "cd examples/tests && yarn test"
+    "test": "cd tests && yarn test"
   },
   "bugs": "https://github.com/hanford/next-offline/issues",
   "authors": [
