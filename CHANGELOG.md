@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.7 2019-03-22
+
+- when `generateInDevMode` is true, dont add register-sw-compiled to bundle many times
+
 ## v3.3.6 2019-02-28
 
 - Ensure we're not modifying config.entry during development when generateInDev is false
