@@ -56,14 +56,20 @@ module.exports = (nextConfig = {}) => ({
       const originalEntry = config.entry;
       config.entry = async () => {
         const entries = await originalEntry();
-        if (entries['main.js'] && !dontAutoRegisterSw) {
+        const swCompiledPath = join(__dirname, 'register-sw-compiled.js')
+        // See https://github.com/zeit/next.js/blob/canary/examples/with-polyfills/next.config.js for a reference on how to add new entrypoints
+        if (
+          entries['main.js'] &&
+          !entries['main.js'].includes(swCompiledPath) &&
+          !dontAutoRegisterSw
+        ) {
           let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
           content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
           content = content.replace('{SW_SCOPE}', scope);
-  
-          await writeFile(join(__dirname, 'register-sw-compiled.js'), content, 'utf8');
-  
-          entries['main.js'].unshift(require.resolve('./register-sw-compiled.js'));
+
+          await writeFile(swCompiledPath, content, 'utf8');
+
+          entries['main.js'].unshift(swCompiledPath);
         }
         return entries;
       };
