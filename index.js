@@ -58,7 +58,6 @@ module.exports = (nextConfig = {}) => ({
           urlPrefix: assetPrefix,
           swDest: workboxOpts.swDest || 'service-worker.js',
           extraCodePath,
-          // extraClientCodePath: extraClientCodePath
         })
       );
     }
