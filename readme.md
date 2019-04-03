@@ -45,20 +45,24 @@ module.exports = withOffline(nextConfig)
 ```
 
 ## Documentation
+- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
 - [Serving service worker](#serving-service-worker)
   - [Now 1.0](#now-10)
   - [Now 2.0](#now-20)
 - [Registering service worker](#registering-service-worker)
-  - [compile-time registration](#compile-time-registration)
-  - [runtime registration](#runtime-registration)
+  - [Compile-time registration](#compile-time-registration)
+  - [Runtime registration](#runtime-registration)
 - [Customizing service worker](#customizing-service-worker)
-  - [workboxOpts](#using-workbox)
+  - [Using workbox](#using-workbox)
   - [next-offline options](#next-offline-options)
-- [Cache Strategies](#cache-strategies)
+  - [further customisations](#further-customisations)
+- [Cache strategies](#cache-strategies)
 - [Service worker path](#service-worker-path)
-- [next export](#next-export)
 - [Development mode](#development-mode)
-- [License](#license-(mit))
+- [next export](#next-export)
+- [License (MIT)](#license-mit)
 
 ## Serving service worker
 Because service workers are so powerful, the API has some restrictions built in. For example, service workers must be served on the domain they're being used on - [you can't use a CDN](https://github.com/w3c/ServiceWorker/issues/940).
@@ -212,6 +216,17 @@ On top of the workbox options, next-offline has some options built in flags to g
     </tr>
   </tbody>
 </table>
+
+### further customisations
+
+It is also possible to append your own code to the end of the serviceWorker, as shown below.
+
+```js
+extraCodePath: "static/serviceWorker.js",
+registerOverridePath: "static/init-sw.js"
+```
+
+`extraCodePath` will append the content of the file to the end of the created serviceWorker, whereas `registerOverridePath` will override the existing default register, so you will need to ensure that it is complete.
 
 ## Cache strategies
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
