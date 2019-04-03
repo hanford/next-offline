@@ -5,6 +5,8 @@ const { readFile, writeFile } = require('fs-extra');
 const { join } = require('path');
 
 const InlineNextPrecacheManifestPlugin = require('./plugin');
+const ExtraCodeApply = require('./extraCodeApply');
+
 const exportSw = require('./export');
 
 module.exports = (nextConfig = {}) => ({
@@ -19,6 +21,8 @@ module.exports = (nextConfig = {}) => ({
 
     const {
       assetPrefix,
+      extraCodePath,
+      registerOverridePath,
       generateSw = true,
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
@@ -48,6 +52,14 @@ module.exports = (nextConfig = {}) => ({
           urlPrefix: assetPrefix,
           swDest: workboxOpts.swDest || 'service-worker.js',
         }),
+        new ExtraCodeApply({
+          outputPath: config.output.path,
+          baseDir: config.context,
+          urlPrefix: assetPrefix,
+          swDest: workboxOpts.swDest || 'service-worker.js',
+          extraCodePath,
+          // extraClientCodePath: extraClientCodePath
+        })
       );
     }
 
@@ -63,7 +75,8 @@ module.exports = (nextConfig = {}) => ({
           !entries['main.js'].includes(swCompiledPath) &&
           !dontAutoRegisterSw
         ) {
-          let content = await readFile(require.resolve('./register-sw.js'), 'utf8');
+          const contentPath = (registerOverridePath && join(config.context, registerOverridePath)) || './register-sw.js';
+          let content = await readFile(require.resolve(contentPath), 'utf8');
           content = content.replace('{REGISTER_SW_PREFIX}', registerSwPrefix);
           content = content.replace('{SW_SCOPE}', scope);
 
