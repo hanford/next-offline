@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v3.3.8 2019-04-10
+
+- add support for workboxOpts.importsDirectory
+
 ## v3.3.7 2019-03-22
 
 - when `generateInDevMode` is true, dont add register-sw-compiled to bundle many times
