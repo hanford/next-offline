@@ -22,7 +22,12 @@ async function generateNextManifest(options) {
 
   const originalManifest = await getOriginalManifest(manifestFilePath);
   const nextManifest = buildNextManifest(originalManifest, options.urlPrefix);
-  await inlineManifest(nextManifest, swFilePath);
+  if (options.transformManifest) {
+    const transformedManifest = options.transformManifest(nextManifest);
+    await inlineManifest(transformedManifest, swFilePath);
+  } else {
+    await inlineManifest(nextManifest, swFilePath);
+  }
 }
 
 function getOriginalManifest(manifestFilePath) {
@@ -46,6 +51,7 @@ function getOriginalManifest(manifestFilePath) {
 function buildNextManifest(originalManifest, urlPrefix = '') {
   return originalManifest.filter(entry => !excludeFiles.includes(entry.url)).map(entry => ({
     url: `${urlPrefix}${nextUrlPrefix}${entry.url}`,
+    revision: entry.revision
   }));
 }
 

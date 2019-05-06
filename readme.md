@@ -210,6 +210,12 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>This is passed to the automatically registered service worker allowing increase or decrease what the service worker has control of.</td>
       <td>"/"</td>
     </tr>
+    <tr>
+      <td>transformManifest</td>
+      <td>Function</td>
+      <td>This is passed the manifest, allowing you to customise the list of assets for the service worker to precache.</td>
+      <td>(manifest) => manifest</td>
+    </tr>
   </tbody>
 </table>
 
