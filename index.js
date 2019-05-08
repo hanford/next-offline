@@ -25,6 +25,7 @@ module.exports = (nextConfig = {}) => ({
       registerSwPrefix = '',
       scope = '/',
       generateInDevMode = false,
+      transformManifest = manifest => manifest,
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
@@ -47,7 +48,8 @@ module.exports = (nextConfig = {}) => ({
           outputPath: config.output.path,
           urlPrefix: assetPrefix,
           swDest: workboxOpts.swDest || 'service-worker.js',
-          importsDirectory: workboxOpts.importsDirectory || ''
+          importsDirectory: workboxOpts.importsDirectory || '',
+          transformManifest
         }),
       );
     }
