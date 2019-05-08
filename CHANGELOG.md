@@ -1,6 +1,11 @@
 
 # Changelog
 
+## v3.4.0 2019-05-08
+
+- add new transformManifest function  that allows you to provide a function to modify the manifest, and add/remove items which will be pre-cached.
+
+
 ## v3.3.8 2019-04-10
 
 - add support for workboxOpts.importsDirectory
