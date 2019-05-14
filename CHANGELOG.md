@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v4.0.0 2019-05-14
+
+- Upgrade workbox-webpack-plugin from 3.6.3 to 4.3.1
+
 ## v3.4.0 2019-05-08
 
 - add new transformManifest function  that allows you to provide a function to modify the manifest, and add/remove items which will be pre-cached.

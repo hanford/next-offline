@@ -58,6 +58,7 @@ module.exports = withOffline(nextConfig)
 - [Service worker path](#service-worker-path)
 - [next export](#next-export)
 - [Development mode](#development-mode)
+- [Next Offline 4.0](#next-offline-4.0)
 - [License](#license-(mit))
 
 ## Serving service worker
@@ -220,12 +221,12 @@ On top of the workbox options, next-offline has some options built in flags to g
 </table>
 
 ## Cache strategies
-By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`
+By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`.
 ```js
 {
   globPatterns: ['static/**/*'],
   globDirectory: '.',
-  runtimeCaching: { urlPattern: /^https?.*/, handler: 'networkFirst' }
+  runtimeCaching: { urlPattern: /^https?.*/, handler: 'NetworkFirst' }
 }
 ```
 
@@ -296,6 +297,9 @@ You can disable this behavior by setting the `generateInDevMode` option to `true
 In next-offline@3.0.0 we've rewritten the export functionality to work in more cases, more reliably, with less code thanks to some of the additions in Next 7.0.0!
 
 You can read more about exporting at [Next.js docs]((https://github.com/zeit/next.js#static-html-export)) but next offline should Just Work™️.
+
+## next offline 4.0
+If you're upgrading to the latest version of `next-offline` I recommend glancing at what's been added/changed inside of [workbox in 4.x releases](https://github.com/GoogleChrome/workbox/releases) along with the 4.0 release which included the [breaking changes](https://github.com/GoogleChrome/workbox/releases/tag/v4.0.0). Next Offline's API hasn't changed, but a core depedency has!
 
 <hr />
 
