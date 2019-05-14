@@ -4,3 +4,4 @@ node_modules/
 */node_modules
 */static/manifest/
 register-sw-compiled.js
+tests/out

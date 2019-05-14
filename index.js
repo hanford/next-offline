@@ -29,7 +29,18 @@ module.exports = (nextConfig = {}) => ({
       workboxOpts = {
         globPatterns: ['static/**/*'],
         globDirectory: '.',
-        runtimeCaching: [{ urlPattern: /^https?.*/, handler: 'networkFirst' }],
+        runtimeCaching: [
+          {
+            urlPattern: /^https?.*/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'offlineCache',
+              expiration: {
+                maxEntries: 200
+              }
+            }
+          }
+        ],
       },
     } = nextConfig;
 
