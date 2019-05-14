@@ -1,7 +1,7 @@
 
 # Changelog
 
-## v4.0.0 2019-05-14
+## v4.0.0 2019-05-13
 
 - Upgrade workbox-webpack-plugin from 3.6.3 to 4.3.1
 
