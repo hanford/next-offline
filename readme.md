@@ -58,7 +58,7 @@ module.exports = withOffline(nextConfig)
 - [Service worker path](#service-worker-path)
 - [next export](#next-export)
 - [Development mode](#development-mode)
-- [Next Offline 4.0](#next-offline-4.0)
+- [Next Offline 4.0](#next-offline-40)
 - [License](#license-(mit))
 
 ## Serving service worker
