@@ -52,7 +52,7 @@ module.exports = withOffline(nextConfig)
   - [compile-time registration](#compile-time-registration)
   - [runtime registration](#runtime-registration)
 - [Customizing service worker](#customizing-service-worker)
-  - [workboxOpts](#using-workbox)
+  - [Using workbox](#using-workbox)
   - [next-offline options](#next-offline-options)
 - [Cache Strategies](#cache-strategies)
 - [Service worker path](#service-worker-path)
@@ -226,7 +226,18 @@ By default `next-offline` has the following blanket runtime caching strategy. If
 {
   globPatterns: ['static/**/*'],
   globDirectory: '.',
-  runtimeCaching: { urlPattern: /^https?.*/, handler: 'NetworkFirst' }
+  runtimeCaching: [
+    {
+      urlPattern: /^https?.*/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'offlineCache',
+        expiration: {
+          maxEntries: 200
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -240,11 +251,11 @@ module.exports = withOffline({
     runtimeCaching: [
       {
         urlPattern: /.png$/,
-        handler: 'cacheFirst'
+        handler: 'CacheFirst'
       },
       {
         urlPattern: /api/,
-        handler: 'networkFirst',
+        handler: 'NetworkFirst',
         options: {
           cacheableResponse: {
             statuses: [0, 200],
