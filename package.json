@@ -9,7 +9,8 @@
     "next-manifest.js",
     "plugin.js",
     "register-sw.js",
-    "service-worker.js"
+    "service-worker.js",
+    "runtime.js"
   ],
   "repository": {
     "type": "git",
