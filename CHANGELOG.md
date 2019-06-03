@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v4.0.2 2019-06-03
+
+- Stop including examples and tests in NPM module
+
 ## v4.0.1 2019-05-21
 
 - When running in dev mode exportPathMap should also be executed 
