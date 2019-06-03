@@ -3,6 +3,15 @@
   "version": "4.0.1",
   "main": "index.js",
   "license": "MIT",
+  "files": [
+    "index.js",
+    "export.js",
+    "next-manifest.js",
+    "plugin.js",
+    "register-sw.js",
+    "service-worker.js",
+    "runtime.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hanford/next-offline.git"
