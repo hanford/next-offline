@@ -6,9 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^7.0.2",
+    "next": "^8.1.0",
     "next-offline": "latest",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
