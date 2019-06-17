@@ -31,7 +31,9 @@ $ yarn add next-offline
 
 ## Usage
 
-Create a `next.config.js` in your project
+There are two important things to set up, first we need `next-offline` to wrap your next config.
+
+If you haven't yet, create a `next.config.js` in your project.
 
 ```js
 // next.config.js
@@ -44,9 +46,11 @@ const nextConfig = {
 module.exports = withOffline(nextConfig)
 ```
 
+Next we need to make sure our the application is properly serving the service worker, this setup depends on how you're hosting your application. There is [documentation](#serving-service-worker) below. If you're not using Now 2.0, the Now 1.0 example should work in most circumstances.
+
 ## Documentation
 - [Serving service worker](#serving-service-worker)
-  - [Now 1.0](#now-10)
+  - [Now 1.0 / AWS](#now-10)
   - [Now 2.0](#now-20)
 - [Registering service worker](#registering-service-worker)
   - [compile-time registration](#compile-time-registration)
