@@ -3,6 +3,7 @@ const withOffline = moduleExists('next-offline')
   : {};
 
 const nextConfig = {
+  target: "serverless",
   workboxOpts: {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
