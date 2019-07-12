@@ -4,7 +4,7 @@
     "dev": "node server.js",
     "clean": "rm -rf .next static/manifest",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "yarn clean && yarn build && NODE_ENV=production node server.js",
     "test": "yarn clean && jest",
     "export": "yarn build && next export"
   },

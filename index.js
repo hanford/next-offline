@@ -1,11 +1,22 @@
 const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { readFile, writeFile } = require('fs-extra');
 const { join } = require('path');
+const { cwd } = require('process');
 
-const InlineNextPrecacheManifestPlugin = require('./plugin');
 const exportSw = require('./export');
+
+// The URL path prefix appended to all assets Next consumes, static or otherwise.
+const nextUrlAssetPrefix = '_next';
+
+// Next build metadata files that shouldn't be included in the pre-cache manifest.
+const preCacheManifestBlacklist = [
+  'react-loadable-manifest.json',
+  'build-manifest.json'
+];
+
+// Directory where static assets must be placed in Next projects.
+const nextAssetPrefixDir = 'static';
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
@@ -18,17 +29,17 @@ module.exports = (nextConfig = {}) => ({
     }
 
     const {
-      assetPrefix,
       generateSw = true,
       dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
       registerSwPrefix = '',
       scope = '/',
       generateInDevMode = false,
-      transformManifest = manifest => manifest,
       workboxOpts = {
-        globPatterns: ['static/**/*'],
-        globDirectory: '.',
+        exclude: preCacheManifestBlacklist,
+        modifyURLPrefix: {
+          'static/': `${nextUrlAssetPrefix}/static/`,
+        },
         runtimeCaching: [
           {
             urlPattern: /^https?.*/,
@@ -44,7 +55,7 @@ module.exports = (nextConfig = {}) => ({
       },
     } = nextConfig;
 
-    const skipDuringDevelopment = options.dev && !generateInDevMode
+    const skipDuringDevelopment = options.dev && !generateInDevMode;
 
     // Generate SW
     if (skipDuringDevelopment) {
@@ -53,15 +64,10 @@ module.exports = (nextConfig = {}) => ({
     } else if (!options.isServer) {
       // Only run once for the client build.
       config.plugins.push(
-        new CleanWebpackPlugin(['precache-manifest.*.js'], { root: config.output.path, verbose: false }),
+        // Workbox uses Webpack's asset manifest to generate the SW's pre-cache manifest, so we need
+        // to copy the app's assets into the Webpack context so those are picked up.
+        new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetPrefixDir)}/**/*` }]),
         generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
-        new InlineNextPrecacheManifestPlugin({
-          outputPath: config.output.path,
-          urlPrefix: assetPrefix,
-          swDest: workboxOpts.swDest || 'service-worker.js',
-          importsDirectory: workboxOpts.importsDirectory || '',
-          transformManifest
-        }),
       );
     }
 
@@ -70,7 +76,7 @@ module.exports = (nextConfig = {}) => ({
       const originalEntry = config.entry;
       config.entry = async () => {
         const entries = await originalEntry();
-        const swCompiledPath = join(__dirname, 'register-sw-compiled.js')
+        const swCompiledPath = join(__dirname, 'register-sw-compiled.js');
         // See https://github.com/zeit/next.js/blob/canary/examples/with-polyfills/next.config.js for a reference on how to add new entrypoints
         if (
           entries['main.js'] &&
