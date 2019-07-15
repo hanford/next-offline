@@ -5242,14 +5242,14 @@ next-manifest@^1.6.0:
     "@pwa/manifest" "^1.0.0"
     "@pwa/manifest-icons" "^2.1.0"
 
-"next-offline@https://github.com/derekdowling/next-offline#e910c1b":
+"next-offline@https://github.com/derekdowling/next-offline#344305b":
   version "4.0.2"
-  resolved "https://github.com/derekdowling/next-offline#e910c1ba2bb1be8bc5360c81e34c768cb98a901f"
+  resolved "https://github.com/derekdowling/next-offline#344305b91a001742bc2517421122b38587bf2540"
   dependencies:
     copy-webpack-plugin "~4.5.2"
     fs-extra "~7.0.0"
     webpack "^4.19.1"
-    workbox-webpack-plugin next
+    workbox-webpack-plugin "5.0.0-alpha.1"
 
 next@7.0.2:
   version "7.0.2"
@@ -7796,7 +7796,7 @@ workbox-sw@^5.0.0-alpha.1:
   resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-5.0.0-alpha.1.tgz#01cb53aea3c60fbe82ceffdd258827139a5717b2"
   integrity sha512-0EUyACd7clxvFhEHUqXm2mZbK17j84tjGJVKSoWa1TTSh0yNlkPrkW2Gh+Sn0o9hrc+sStqC9POh9yJd5VGsDw==
 
-workbox-webpack-plugin@next:
+workbox-webpack-plugin@5.0.0-alpha.1:
   version "5.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/workbox-webpack-plugin/-/workbox-webpack-plugin-5.0.0-alpha.1.tgz#0f1dbe376ae5f15738eb63c76622b67c5757a052"
   integrity sha512-wJM0ZZwbSAE7KvfKoIblgnP1oCY38rTHExlfljgOIp+K05a/GzcjV/jvfAR/8cug4+TGdx9AsIbXCcAjpTmB8g==
