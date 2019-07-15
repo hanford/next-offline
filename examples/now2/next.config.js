@@ -1,9 +1,8 @@
-const withOffline = moduleExists('next-offline')
-  ? require('next-offline')
-  : {};
+const withOffline = require('next-offline');
 
 const nextConfig = {
-  target: "serverless",
+  target: 'serverless',
+  transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
   workboxOpts: {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
@@ -24,16 +23,6 @@ const nextConfig = {
       },
     ],
   },
-}
+};
 
-module.exports = moduleExists('next-offline')
-  ? withOffline(nextConfig)
-  : nextConfig
-
-function moduleExists(name) {
-  try {
-    return require.resolve(name);
-  } catch (error) {
-    return false;
-  }
-}
+module.exports = withOffline(nextConfig);
