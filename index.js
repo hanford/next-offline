@@ -39,17 +39,13 @@ module.exports = (nextConfig = {}) => ({
       scope = '/',
       workboxOpts = {
         exclude: preCacheManifestBlacklist,
-        // Ensure that static file SW dependencies are placed in the expected place for Next projects
-        importsDirectory: nextAssetLinkPrefix,
+        // TODO: Do we want to bundle Workbox inline? Makes the SW + dependencies slightly less cache-able, but it
+        //  simplifies the setup or Next since these files need to be moved into the correct static
+        //  folder/path and it's not clear how to do that in Workbox v5 yet
+        inlineWorkboxRuntime: true,
         modifyURLPrefix: {
           'static/': nextAssetLinkPrefix,
         },
-        manifestTransforms: [
-          (manifest) => {
-            console.log({ manifest });
-            return { manifest };
-          }
-        ],
         runtimeCaching: [
           {
             urlPattern: /^https?.*/,

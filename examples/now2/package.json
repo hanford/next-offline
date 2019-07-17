@@ -2,12 +2,13 @@
   "name": "create-next-example-app",
   "scripts": {
     "dev": "next",
+    "dev:prodlike": "NODE_ENV=production next",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "next": "^8.1.0",
-    "next-offline": "https://github.com/derekdowling/next-offline#0270acd",
+    "next-offline": "https://github.com/derekdowling/next-offline#7292d7c",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
