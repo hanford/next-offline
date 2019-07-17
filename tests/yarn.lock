@@ -5247,9 +5247,9 @@ next-manifest@^2.0.0:
     "@pwa/manifest" "^1.1.0"
     "@pwa/manifest-icons" "^3.1.0"
 
-"next-offline@https://github.com/derekdowling/next-offline#7292d7c":
+"next-offline@https://github.com/derekdowling/next-offline#d3230ea":
   version "4.0.2"
-  resolved "https://github.com/derekdowling/next-offline#7292d7ce6510cefbd5e74c765bd01833eeed9ace"
+  resolved "https://github.com/derekdowling/next-offline#d3230ea76937bd9045ce4ebdd5d1ca3f9a0b96cc"
   dependencies:
     copy-webpack-plugin "~4.5.2"
     fs-extra "~7.0.0"
