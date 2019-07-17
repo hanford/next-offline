@@ -208,7 +208,7 @@ On top of the workbox options, next-offline has some options built in flags to g
     <tr>
       <td>registerSwPrefix</td>
       <td>String</td>
-      <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js</td>
+      <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js. This affects the [scope](https://developers.google.com/web/ilt/pwa/introduction-to-service-worker#registration_and_scope) of your service worker.</td>
       <td>false</td>
     </tr>
     <tr>
@@ -216,12 +216,6 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>String</td>
       <td>This is passed to the automatically registered service worker allowing increase or decrease what the service worker has control of.</td>
       <td>"/"</td>
-    </tr>
-    <tr>
-      <td>transformManifest</td>
-      <td>Function</td>
-      <td>This is passed the manifest, allowing you to customise the list of assets for the service worker to precache.</td>
-      <td>(manifest) => manifest</td>
     </tr>
   </tbody>
 </table>

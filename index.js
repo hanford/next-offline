@@ -6,9 +6,6 @@ const { cwd } = require('process');
 
 const exportSw = require('./export');
 
-// The URL path prefix appended to all assets Next consumes, static or otherwise.
-const nextUrlAssetPrefix = '_next';
-
 // Next build metadata files that shouldn't be included in the pre-cache manifest.
 const preCacheManifestBlacklist = [
   'react-loadable-manifest.json',
@@ -16,7 +13,10 @@ const preCacheManifestBlacklist = [
 ];
 
 // Directory where static assets must be placed in Next projects.
-const nextAssetPrefixDir = 'static';
+const nextAssetDirectory = 'static';
+
+// The URL path prefix for all static assets contained within a Next project
+const nextAssetLinkPrefix = '_next/static/';
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
@@ -29,16 +29,20 @@ module.exports = (nextConfig = {}) => ({
     }
 
     const {
-      generateSw = true,
-      dontAutoRegisterSw = false,
       devSwSrc = join(__dirname, 'service-worker.js'),
+      dontAutoRegisterSw = false,
+      generateInDevMode = false,
+      generateSw = true,
+      // Before adjusting "registerSwPrefix" or "scope", read:
+      // https://developers.google.com/web/ilt/pwa/introduction-to-service-worker#registration_and_scope
       registerSwPrefix = '',
       scope = '/',
-      generateInDevMode = false,
       workboxOpts = {
         exclude: preCacheManifestBlacklist,
+        // Ensure that static file SW dependencies are placed in the expected place for Next projects
+        importsDirectory: nextAssetLinkPrefix,
         modifyURLPrefix: {
-          'static/': `${nextUrlAssetPrefix}/static/`,
+          'static/': nextAssetLinkPrefix,
         },
         manifestTransforms: [
           (manifest) => {
@@ -72,7 +76,7 @@ module.exports = (nextConfig = {}) => ({
       config.plugins.push(
         // Workbox uses Webpack's asset manifest to generate the SW's pre-cache manifest, so we need
         // to copy the app's assets into the Webpack context so those are picked up.
-        new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetPrefixDir)}/**/*` }]),
+        new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetDirectory)}/**/*` }]),
         generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
       );
     }
