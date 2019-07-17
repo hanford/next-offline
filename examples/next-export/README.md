@@ -1,11 +1,6 @@
-Example application using `next-offline` with next-export
+Example application using `next-offline` with Next's [Static HTML App](https://nextjs.org/learn/excel/static-html-export) mode.
 
 ```sh
 $ yarn install
 $ yarn dev
-```
-
-To deploy the example, just type `now`
-```
-$ now
 ```

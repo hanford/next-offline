@@ -3,12 +3,14 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "dev:prodlike": "yarn export && serve -p 3000 ./out"
   },
   "dependencies": {
     "next": "^8.1.0",
     "next-offline": "https://github.com/derekdowling/next-offline#0270acd",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "serve": "^11.0.1"
   }
 }
