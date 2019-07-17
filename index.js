@@ -40,6 +40,12 @@ module.exports = (nextConfig = {}) => ({
         modifyURLPrefix: {
           'static/': `${nextUrlAssetPrefix}/static/`,
         },
+        manifestTransforms: [
+          (manifest) => {
+            console.log({ manifest });
+            return { manifest };
+          }
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https?.*/,

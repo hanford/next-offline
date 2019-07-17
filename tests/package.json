@@ -12,7 +12,7 @@
     "mkdirp": "^0.5.1",
     "next": "7.0.2",
     "next-compose-plugins": "^2.1.1",
-    "next-manifest": "^1.6.0",
+    "next-manifest": "^2.0.0",
     "next-offline": "https://github.com/derekdowling/next-offline#344305b",
     "react": "16.6.1",
     "react-dom": "16.6.1",

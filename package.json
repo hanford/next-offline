@@ -7,7 +7,6 @@
     "index.js",
     "export.js",
     "next-manifest.js",
-    "plugin.js",
     "register-sw.js",
     "service-worker.js",
     "runtime.js"
