@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "next": "^8.1.0",
-    "next-offline": "https://github.com/derekdowling/next-offline#344305b",
+    "next-offline": "https://github.com/derekdowling/next-offline#0270acd",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
