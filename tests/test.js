@@ -54,8 +54,6 @@ test('withOffline builds a service worker file with auto-registration logic', as
   const mainFileName = await findHashedFileName(getNextBuildFilePath('static/runtime'), getFileHashRegex('main', 'js'));
   const mainFileContents = await readBuildFile(`static/runtime/${mainFileName}`);
   expect(mainFileContents).toEqual(expect.stringContaining('serviceWorker'));
-
-  const str = await readBuildFile('service-worker.js');
 });
 
 test('withOffline builds a service worker file without auto-registration logic when the consumer opts out', async () => {
@@ -97,4 +95,16 @@ test('withOffline pre-caches the generated manifest from withManifest', async ()
 
   const serviceWorkerContent = await readBuildFile('service-worker.js');
   expect(serviceWorkerContent).toEqual(expect.stringContaining('_next/static/manifest/manifest.json'));
+});
+
+// TODO: unskip this when https://github.com/GoogleChrome/workbox/issues/2138 is fixed
+test.skip('withOffline respects "swDest"', async () => {
+  const customSWDest = './static/service-worker.js';
+
+  const nextConf = forceProd(withOffline({
+    workboxOpts: { swDest: customSWDest }
+  }));
+
+  await nextBuild.default(cwd, nextConf);
+  await access(getNextBuildFilePath(customSWDest), fs.constants.F_OK);
 });

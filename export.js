@@ -1,7 +1,8 @@
 const { copy } = require('fs-extra');
 const { join } = require('path');
 
-// Copy the generated service worker into the export folder.
+// Copies the generated Service Worker into the export folder if the Next.js app is being built as
+// a Static HTML app
 function exportSw(nextConfig) {
   return async function exportPathMap(...args) {
     const [defaultPathMap, { dev, distDir, outDir }] = args;
