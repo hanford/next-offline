@@ -208,7 +208,7 @@ On top of the workbox options, next-offline has some options built in flags to g
     <tr>
       <td>registerSwPrefix</td>
       <td>String</td>
-      <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js</td>
+      <td>If your service worker isn't at the root level of your application, this can help you prefix the path. This is useful if you'd like your service worker on foobar.com/my/long/path/service-worker.js. This affects the [scope](https://developers.google.com/web/ilt/pwa/introduction-to-service-worker#registration_and_scope) of your service worker.</td>
       <td>false</td>
     </tr>
     <tr>
@@ -217,12 +217,6 @@ On top of the workbox options, next-offline has some options built in flags to g
       <td>This is passed to the automatically registered service worker allowing increase or decrease what the service worker has control of.</td>
       <td>"/"</td>
     </tr>
-    <tr>
-      <td>transformManifest</td>
-      <td>Function</td>
-      <td>This is passed the manifest, allowing you to customise the list of assets for the service worker to precache.</td>
-      <td>(manifest) => manifest</td>
-    </tr>
   </tbody>
 </table>
 
@@ -230,8 +224,6 @@ On top of the workbox options, next-offline has some options built in flags to g
 By default `next-offline` has the following blanket runtime caching strategy. If you customize `next-offline` with `workboxOpts`, the default behaviour will not be passed into `workbox-webpack-plugin`. This [article](https://developers.google.com/web/tools/workbox/guides/generate-service-worker/webpack#adding_runtime_caching) is great at breaking down various different cache recipes.
 ```js
 {
-  globPatterns: ['static/**/*'],
-  globDirectory: '.',
   runtimeCaching: [
     {
       urlPattern: /^https?.*/,
@@ -285,8 +277,6 @@ If you'd like to include some more or change the origin of your static files use
 
 ```js
 workboxOpts: {
-  globPatterns: ['app/static/**/*', 'any/other/fileglob/to/cache'],
-  globDirectory: '.',
   modifyUrlPrefix: {
     'app': assetPrefix,
   },
@@ -315,8 +305,8 @@ In next-offline@3.0.0 we've rewritten the export functionality to work in more c
 
 You can read more about exporting at [Next.js docs]((https://github.com/zeit/next.js#static-html-export)) but next offline should Just Work™️.
 
-## next offline 4.0
-If you're upgrading to the latest version of `next-offline` I recommend glancing at what's been added/changed inside of [workbox in 4.x releases](https://github.com/GoogleChrome/workbox/releases) along with the 4.0 release which included the [breaking changes](https://github.com/GoogleChrome/workbox/releases/tag/v4.0.0). Next Offline's API hasn't changed, but a core depedency has!
+## next offline 5.0
+If you're upgrading to the latest version of `next-offline` I recommend glancing at what's been added/changed inside of [Workbox in 5.x releases](https://github.com/GoogleChrome/workbox/releases) along with the 4.0 release which included the [breaking changes](https://github.com/GoogleChrome/workbox/releases/tag/v4.0.0). Next Offline's API hasn't changed, but a core dependency has!
 
 <hr />
 

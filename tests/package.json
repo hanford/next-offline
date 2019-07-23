@@ -4,7 +4,7 @@
     "dev": "node server.js",
     "clean": "rm -rf .next static/manifest",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "yarn clean && yarn build && NODE_ENV=production node server.js",
     "test": "yarn clean && jest",
     "export": "yarn build && next export"
   },
@@ -12,13 +12,13 @@
     "mkdirp": "^0.5.1",
     "next": "7.0.2",
     "next-compose-plugins": "^2.1.1",
-    "next-manifest": "^1.6.0",
-    "next-offline": "latest",
+    "next-manifest": "^2.0.0",
+    "next-offline": "https://github.com/derekdowling/next-offline#d3230ea",
     "react": "16.6.1",
     "react-dom": "16.6.1",
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^24.8.0"
   }
 }

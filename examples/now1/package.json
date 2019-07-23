@@ -3,11 +3,12 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "yarn build && yarn start:prod",
+    "start:prod": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "next": "^8.1.0",
-    "next-offline": "latest",
+    "next-offline": "https://github.com/derekdowling/next-offline#d3230ea",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

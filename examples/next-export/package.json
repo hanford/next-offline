@@ -2,13 +2,15 @@
   "name": "create-next-example-app",
   "scripts": {
     "dev": "next",
+    "dev:prodlike": "yarn export && serve -p 3000 ./out",
     "build": "next build",
     "export": "next build && next export"
   },
   "dependencies": {
     "next": "^8.1.0",
-    "next-offline": "latest",
+    "next-offline": "https://github.com/derekdowling/next-offline#d3230ea",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "serve": "^11.0.1"
   }
 }
