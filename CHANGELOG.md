@@ -1,6 +1,11 @@
 
 # Changelog
 
+## v5.0.0 TBD
+
+- Upgrade to Workbox v5
+
+
 ## v4.0.2 2019-06-03
 
 - Stop including examples and tests in NPM module

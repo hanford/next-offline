@@ -1,6 +1,6 @@
 {
   "name": "next-offline",
-  "version": "4.0.2",
+  "version": "5.0.0-alpha.0",
   "main": "index.js",
   "license": "MIT",
   "files": [
