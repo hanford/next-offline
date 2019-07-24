@@ -18,6 +18,29 @@ const nextAssetDirectory = 'static';
 // The URL path prefix for all static assets contained within a Next project
 const nextAssetLinkPrefix = '_next/static/';
 
+const defaultWorkboxOpts = {
+  exclude: preCacheManifestBlacklist,
+  // As of Workbox v5 Alpha there isn't a well documented way to move workbox runtime into the directory
+  // required by Next. As a work around, we inline the tree-shaken runtime into the main Service Worker file
+  // at the cost of less cacheability
+  inlineWorkboxRuntime: true,
+  modifyURLPrefix: {
+    'static/': nextAssetLinkPrefix,
+  },
+  runtimeCaching: [
+    {
+      urlPattern: /^https?.*/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'offlineCache',
+        expiration: {
+          maxEntries: 200
+        }
+      }
+    }
+  ],
+};
+
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
   exportPathMap: exportSw(nextConfig),
@@ -37,30 +60,10 @@ module.exports = (nextConfig = {}) => ({
       // https://developers.google.com/web/ilt/pwa/introduction-to-service-worker#registration_and_scope
       registerSwPrefix = '',
       scope = '/',
-      workboxOpts = {
-        exclude: preCacheManifestBlacklist,
-        // TODO: Do we want to bundle Workbox inline? Makes the SW + dependencies slightly less cache-able, but it
-        //  simplifies the setup or Next since these files need to be moved into the correct static
-        //  folder/path and it's not clear how to do that in Workbox v5 yet
-        inlineWorkboxRuntime: true,
-        modifyURLPrefix: {
-          'static/': nextAssetLinkPrefix,
-        },
-        runtimeCaching: [
-          {
-            urlPattern: /^https?.*/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'offlineCache',
-              expiration: {
-                maxEntries: 200
-              }
-            }
-          }
-        ],
-      },
+      workboxOpts = {},
     } = nextConfig;
 
+    const combinedWorkboxOpts = { ...defaultWorkboxOpts, ...workboxOpts };
     const skipDuringDevelopment = options.dev && !generateInDevMode;
 
     // Generate SW
@@ -73,7 +76,7 @@ module.exports = (nextConfig = {}) => ({
         // Workbox uses Webpack's asset manifest to generate the SW's pre-cache manifest, so we need
         // to copy the app's assets into the Webpack context so those are picked up.
         new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetDirectory)}/**/*` }]),
-        generateSw ? new GenerateSW({ ...workboxOpts }) : new InjectManifest({ ...workboxOpts }),
+        generateSw ? new GenerateSW({ ...combinedWorkboxOpts }) : new InjectManifest({ ...combinedWorkboxOpts }),
       );
     }
 
