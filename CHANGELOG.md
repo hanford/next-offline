@@ -4,6 +4,7 @@
 ## v5.0.0 TBD
 
 - Upgrade to Workbox v5
+- Allow both next-offline defaults and custom workboxOpts to be used together
 
 
 ## v4.0.2 2019-06-03
