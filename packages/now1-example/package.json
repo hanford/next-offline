@@ -1,5 +1,7 @@
 {
-  "name": "create-next-example-app",
+  "name": "now-1example",
+  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",

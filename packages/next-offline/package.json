@@ -1,0 +1,55 @@
+{
+  "name": "next-offline",
+  "version": "5.0.0-beta.1",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "export.js",
+    "next-manifest.js",
+    "register-sw.js",
+    "service-worker.js",
+    "runtime.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanford/next-offline.git"
+  },
+  "bugs": "https://github.com/hanford/next-offline/issues",
+  "authors": [
+    "Jack Hanford"
+  ],
+  "tags": [
+    "react",
+    "next.js",
+    "offline",
+    "service worker",
+    "pre-cache",
+    "networkFirst",
+    "cacheFirst",
+    "webpack",
+    "workbox",
+    "sw-helpers"
+  ],
+  "keywords": [
+    "react",
+    "next.js",
+    "offline",
+    "service worker",
+    "pre-cache",
+    "networkFirst",
+    "cacheFirst",
+    "webpack",
+    "workbox",
+    "sw-helpers"
+  ],
+  "peerDependencies": {
+    "next": ">=7.0.0"
+  },
+  "dependencies": {
+    "copy-webpack-plugin": "~4.5.2",
+    "fs-extra": "~7.0.0",
+    "webpack": "^4.19.1",
+    "workbox-webpack-plugin": "5.0.0-alpha.1"
+  }
+}

@@ -1,5 +1,7 @@
 {
-  "name": "create-next-example-app",
+  "name": "now2-example",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",

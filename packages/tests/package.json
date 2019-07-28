@@ -1,5 +1,7 @@
 {
   "name": "next-offline-test-app",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "node server.js",
     "clean": "rm -rf .next static/manifest",
