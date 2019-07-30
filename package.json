@@ -1,65 +1,22 @@
 {
   "name": "next-offline",
-  "version": "5.0.0-beta.1",
-  "main": "index.js",
   "license": "MIT",
-  "files": [
-    "index.js",
-    "export.js",
-    "next-manifest.js",
-    "register-sw.js",
-    "service-worker.js",
-    "runtime.js"
-  ],
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/hanford/next-offline.git"
   },
   "scripts": {
-    "test": "cd tests && yarn test"
+    "test": "yarn run --cwd=packages/tests test",
+    "bootstrap": "yarn && npx lerna bootstrap"
   },
   "bugs": "https://github.com/hanford/next-offline/issues",
   "authors": [
     "Jack Hanford"
   ],
-  "contributors": [
-    "Joao Vieira <joaoguerravieira@gmail.com>"
-  ],
-  "tags": [
-    "react",
-    "next.js",
-    "offline",
-    "service worker",
-    "pre-cache",
-    "networkFirst",
-    "cacheFirst",
-    "webpack",
-    "workbox",
-    "sw-helpers"
-  ],
-  "keywords": [
-    "react",
-    "next.js",
-    "offline",
-    "service worker",
-    "pre-cache",
-    "networkFirst",
-    "cacheFirst",
-    "webpack",
-    "workbox",
-    "sw-helpers"
-  ],
-  "peerDependencies": {
-    "next": ">=7.0.0"
-  },
-  "dependencies": {
-    "copy-webpack-plugin": "~4.5.2",
-    "fs-extra": "~7.0.0",
-    "webpack": "^4.19.1",
-    "workbox-webpack-plugin": "5.0.0-alpha.1"
-  },
   "devDependencies": {
     "husky": "^0.14.3",
+    "lerna": "^3.16.4",
     "prettier": "^1.14.3",
     "pretty-quick": "^1.7.0"
   },
@@ -67,5 +24,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

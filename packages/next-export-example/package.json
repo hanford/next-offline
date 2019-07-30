@@ -1,5 +1,7 @@
 {
-  "name": "create-next-example-app",
+  "name": "next-export-example",
+  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next",
     "dev:prodlike": "yarn export && serve -p 3000 ./out",

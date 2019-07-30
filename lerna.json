@@ -1,0 +1,17 @@
+{
+  "lerna": "2.2.0",
+  "packages": [
+    "packages/*"
+  ],
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "version": "independent",
+  "command": {
+    "publish": {
+      "allowBranch": "master"
+    },
+    "init": {
+      "exact": true
+    }
+  }
+}
