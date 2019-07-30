@@ -11,7 +11,7 @@ module.exports = class InlineNextPrecacheManifestPlugin {
     };
 
     if (compiler.hooks) {
-      compiler.hooks.done.tap(
+      compiler.hooks.done.tapPromise(
         'CopyPlugin',
         async() => generateNextManifest(this.opts),
         errorhandler
