@@ -2,6 +2,13 @@ node_modules/
 */.next
 *.log
 */node_modules
-*/static/manifest/
-register-sw-compiled.js
-tests/out
+*/packges/*/static/manifest/
+*/packages/*/.next
+packages/next-offline/register-sw-compiled.js
+packages/tests/static/manifest/
+packages/tests/static/manifest
+packages/tests/.next/
+packages/now1-example/.next
+packages/now2-example/.next
+packages/next-export-example/.next
+packages/next-export-example/out
