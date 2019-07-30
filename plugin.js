@@ -13,8 +13,7 @@ module.exports = class InlineNextPrecacheManifestPlugin {
     if (compiler.hooks) {
       compiler.hooks.done.tapPromise(
         'CopyPlugin',
-        async() => generateNextManifest(this.opts),
-        errorhandler
+        async() => generateNextManifest(this.opts).cactch(errorhandler)
       );
     } else {
       compiler.plugin(
