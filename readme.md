@@ -63,6 +63,7 @@ Next we need to make sure our the application is properly serving the service wo
 - [next export](#next-export)
 - [Development mode](#development-mode)
 - [Next Offline 4.0](#next-offline-40)
+- [Contrbuting](#contributing)
 - [License](#license-(mit))
 
 ## Serving service worker
@@ -311,6 +312,15 @@ If you're upgrading to the latest version of `next-offline` I recommend glancing
 <hr />
 
 Questions? Feedback? [Please let me know](https://github.com/hanford/next-offline/issues/new)
+
+## Contributing
+`next-offline` is a [lerna monorepo](https://lerna.js.org/)  which uses yarn workspaces. After cloning the repo, run the following
+
+```sh
+$ yarn bootstrap
+```
+
+This will ensure your development version of next-offline is symlinked in the examples & tests which should allow you to quickly make changes!
 
 ## License (MIT)
 
