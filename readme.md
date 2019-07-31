@@ -105,7 +105,7 @@ You can  read more about custom servers in the [Next.js docs](https://github.com
 If you're not hosting with Now, I'd probably follow the Now 1.0 approach because the custom server API can enable a lot of functionality, it just simply doesn't work well with Now 2.0 🙇‍♂️
 
 ### Now 2.0
-Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/examples/now2). The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline/blob/master/examples/now2/now.json) and [next.config.js](https://github.com/hanford/next-offline/blob/master/examples/now2/next.config.js).
+Because Now 2.0 works so different than the previous version, so does serving the service worker. There are a few different ways to do this, but I'd recommend checking out [this now2 example app](https://github.com/hanford/next-offline/tree/master/packages/now2-example). The changes to be aware of are in the [now.json](https://github.com/hanford/next-offline/blob/master/examples/now2/now.json) and [next.config.js](https://github.com/hanford/next-offline/blob/master/examples/now2/next.config.js).
 
 ## Registering service worker
 ### Compile-time registration
