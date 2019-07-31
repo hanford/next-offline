@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v4.0.3 2019-07-31
+- tapPromise should be used instead of tap properly handle async service worker file save.
+tap is for sync plugins based on documentation.
+
 ## v4.0.2 2019-06-03
 
 - Stop including examples and tests in NPM module
