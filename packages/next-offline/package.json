@@ -44,12 +44,12 @@
     "sw-helpers"
   ],
   "peerDependencies": {
-    "next": ">=7.0.0"
+    "next": ">=7.0.0",
+    "webpack": "^4.19.1"
   },
   "dependencies": {
     "copy-webpack-plugin": "~4.5.2",
     "fs-extra": "~7.0.0",
-    "webpack": "^4.19.1",
     "workbox-webpack-plugin": "5.0.0-alpha.1"
   }
 }
