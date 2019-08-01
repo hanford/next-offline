@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
-    "next": "7.0.2",
+    "next": "^9.0.3",
     "next-compose-plugins": "^2.1.1",
     "next-manifest": "^2.0.0",
     "next-offline": "^5.0.0-alpha.0",
