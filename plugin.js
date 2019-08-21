@@ -11,7 +11,7 @@ module.exports = class InlineNextPrecacheManifestPlugin {
     };
 
     if (compiler.hooks) {
-      compiler.hooks.done.tapPromise('GenerateSW', () =>
+      compiler.hooks.afterEmit.tapPromise(this.constructor.name, () =>
         generateNextManifest(this.opts).catch(errorhandler),
       );
     } else {
