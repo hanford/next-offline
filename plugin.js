@@ -11,16 +11,11 @@ module.exports = class InlineNextPrecacheManifestPlugin {
     };
 
     if (compiler.hooks) {
-      compiler.hooks.done.tapPromise(
-        'CopyPlugin',
-        async() => generateNextManifest(this.opts).catch(errorhandler)
+      compiler.hooks.done.tapPromise('GenerateSW', () =>
+        generateNextManifest(this.opts).catch(errorhandler),
       );
     } else {
-      compiler.plugin(
-        'done',
-        async() => generateNextManifest(this.opts),
-        errorhandler
-      );
+      compiler.plugin('done', () => generateNextManifest(this.opts), errorhandler);
     }
   }
 };
