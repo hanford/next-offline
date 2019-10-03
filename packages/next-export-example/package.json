@@ -1,7 +1,7 @@
 {
   "name": "next-export-example",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "scripts": {
     "dev": "next",
     "dev:prodlike": "yarn export && serve -p 3000 ./out",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "next": "^9.0.3",
-    "next-offline": "^5.0.0-beta.5",
+    "next-offline": "^5.0.0-6.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "serve": "^11.0.1"
