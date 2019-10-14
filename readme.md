@@ -152,7 +152,7 @@ module.exports = withOffline({ dontAutoRegisterSw: true })
 
 ### Using workbox
 
-If you're new to workbox, I'd recommend reading this [quick guide](https://developers.google.com/web/tools/workbox/guides/generate-service-worker/webpack#adding_runtime_caching) -- anything inside of `worboxOpts` will be passed to `workbox-webpack-plugin`.
+If you're new to workbox, I'd recommend reading this [quick guide](https://developers.google.com/web/tools/workbox/guides/generate-service-worker/webpack#adding_runtime_caching) -- anything inside of `workboxOpts` will be passed to `workbox-webpack-plugin`.
 
 Define a `workboxOpts` object in your `next.config.js` and it will gets passed to [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generatesw_plugin). Workbox is what `next-offline` uses under the hood to generate the service worker, you can learn more about it [here](https://developers.google.com/web/tools/workbox/).
 
