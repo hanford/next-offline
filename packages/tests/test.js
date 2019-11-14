@@ -81,10 +81,10 @@ test('withOffline includes static assets and build artifacts in its service work
 
   // Check that various bundles are getting entered into pre-cache manifest
   expect(serviceWorkerContents).toEqual(expect.stringContaining('/pages/_app.js'));
-  expect(serviceWorkerContents).toEqual(expect.stringContaining('.next/static/chunks/commons.'));
+  expect(serviceWorkerContents).toEqual(expect.stringContaining('_next/static/chunks/commons.'));
 
   // Check that static asset copying via glob pattern is working as expected
-  expect(serviceWorkerContents).toEqual(expect.stringContaining('.next/public/image.jpg'));
+  expect(serviceWorkerContents).toEqual(expect.stringContaining('_next/public/image.jpg'));
 });
 
 test('withOffline pre-caches the generated manifest from withManifest', async () => {
@@ -101,7 +101,7 @@ test('withOffline pre-caches the generated manifest from withManifest', async ()
   await nextBuild.default(cwd, nextConf);
 
   const serviceWorkerContent = await readBuildFile('service-worker.js');
-  expect(serviceWorkerContent).toEqual(expect.stringContaining('.next/public/manifest.json'));
+  expect(serviceWorkerContent).toEqual(expect.stringContaining('_next/public/manifest.json'));
 });
 
 test('withOffline respects "swDest"', async () => {

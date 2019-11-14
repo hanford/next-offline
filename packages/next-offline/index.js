@@ -15,8 +15,8 @@ const nextAssetDirectory = 'public';
 const defaultInjectOpts = {
   exclude: preCacheManifestBlacklist,
   modifyURLPrefix: {
-    'static/': '.next/static/',
-    'public/': '.next/public/',
+    'static/': '_next/static/',
+    'public/': '_next/public/',
   },
 };
 
