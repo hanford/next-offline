@@ -1,0 +1,26 @@
+{
+  "name": "next-app",
+  "short_name": "Short name for Icon and Task",
+  "icons": [
+    {
+      "src": "icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=web_app_manifest",
+  "display": "standalone",
+  "orientation": "natural",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF"
+}

@@ -7,23 +7,18 @@ const { cwd } = require('process');
 const exportSw = require('./export');
 
 // Next build metadata files that shouldn't be included in the pre-cache manifest.
-const preCacheManifestBlacklist = [
-  'react-loadable-manifest.json',
-  'build-manifest.json'
-];
+const preCacheManifestBlacklist = ['react-loadable-manifest.json', 'build-manifest.json'];
 
-// Directory where static assets must be placed in Next projects.
-const nextAssetDirectory = 'static';
-
-// The URL path prefix for all static assets contained within a Next project
-const nextAssetLinkPrefix = '_next/static/';
+// Directory where public assets must be placed in Next projects.
+const nextAssetDirectory = 'public';
 
 const defaultInjectOpts = {
   exclude: preCacheManifestBlacklist,
   modifyURLPrefix: {
-    'static/': nextAssetLinkPrefix,
+    'static/': '.next/static/',
+    'public/': '.next/public/',
   },
-}
+};
 
 const defaultGenerateOpts = {
   ...defaultInjectOpts,
@@ -38,10 +33,10 @@ const defaultGenerateOpts = {
       options: {
         cacheName: 'offlineCache',
         expiration: {
-          maxEntries: 200
-        }
-      }
-    }
+          maxEntries: 200,
+        },
+      },
+    },
   ],
 };
 
@@ -79,7 +74,9 @@ module.exports = (nextConfig = {}) => ({
         // Workbox uses Webpack's asset manifest to generate the SW's pre-cache manifest, so we need
         // to copy the app's assets into the Webpack context so those are picked up.
         new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetDirectory)}/**/*` }]),
-        generateSw ? new GenerateSW({ ...defaultGenerateOpts, ...workboxOpts }) : new InjectManifest({ ...defaultInjectOpts, ...workboxOpts }),
+        generateSw
+          ? new GenerateSW({ ...defaultGenerateOpts, ...workboxOpts })
+          : new InjectManifest({ ...defaultInjectOpts, ...workboxOpts }),
       );
     }
 

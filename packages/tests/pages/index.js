@@ -1,18 +1,15 @@
-import React from 'react'
-import Link from 'next/link'
-
-import { register, unregister } from 'next-offline/runtime'
+import { register, unregister } from 'next-offline/runtime';
+import React from 'react';
 
 const App = () => {
   return (
     <>
       <h1 className="title">tests</h1>
 
-
       <button onClick={() => register()}>register</button>
       <button onClick={() => unregister()}>unregister</button>
 
-      <img src='static/image.jpg' />
+      <img src="/image.jpg" />
 
       <style jsx>{`
         body {
@@ -45,7 +42,7 @@ const App = () => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

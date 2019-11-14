@@ -34,7 +34,7 @@ async function readBuildFile(filePath) {
 // Read a directory and returns the file path for the first file name matching the provided RegExp.
 async function findHashedFileName(directoryPath, regexTest) {
   const files = await readdir(directoryPath);
-  return files.find((filePath) => regexTest.test(filePath));
+  return files.find(filePath => regexTest.test(filePath));
 }
 
 beforeEach(async () => {
@@ -51,7 +51,10 @@ test('withOffline builds a service worker file with auto-registration logic', as
   await access(getNextBuildFilePath('service-worker.js'), fs.constants.F_OK);
 
   // Check registration logic exists
-  const mainFileName = await findHashedFileName(getNextBuildFilePath('static/runtime'), getFileHashRegex('main', 'js'));
+  const mainFileName = await findHashedFileName(
+    getNextBuildFilePath('static/runtime'),
+    getFileHashRegex('main', 'js'),
+  );
   const mainFileContents = await readBuildFile(`static/runtime/${mainFileName}`);
   expect(mainFileContents).toEqual(expect.stringContaining('serviceWorker'));
 });
@@ -62,7 +65,10 @@ test('withOffline builds a service worker file without auto-registration logic w
   await nextBuild.default(cwd, nextConf);
   await access(getNextBuildFilePath('service-worker.js'), fs.constants.F_OK);
 
-  const mainFileName = await findHashedFileName(getNextBuildFilePath('static/runtime'), getFileHashRegex('main', 'js'));
+  const mainFileName = await findHashedFileName(
+    getNextBuildFilePath('static/runtime'),
+    getFileHashRegex('main', 'js'),
+  );
   const mainFileContents = await readBuildFile(`static/runtime/${mainFileName}`);
   expect(mainFileContents).not.toEqual(expect.stringContaining('serviceWorker'));
 });
@@ -75,10 +81,10 @@ test('withOffline includes static assets and build artifacts in its service work
 
   // Check that various bundles are getting entered into pre-cache manifest
   expect(serviceWorkerContents).toEqual(expect.stringContaining('/pages/_app.js'));
-  expect(serviceWorkerContents).toEqual(expect.stringContaining('_next/static/chunks/commons.'));
+  expect(serviceWorkerContents).toEqual(expect.stringContaining('.next/static/chunks/commons.'));
 
   // Check that static asset copying via glob pattern is working as expected
-  expect(serviceWorkerContents).toEqual(expect.stringContaining('_next/static/image.jpg'));
+  expect(serviceWorkerContents).toEqual(expect.stringContaining('.next/public/image.jpg'));
 });
 
 test('withOffline pre-caches the generated manifest from withManifest', async () => {
@@ -86,6 +92,7 @@ test('withOffline pre-caches the generated manifest from withManifest', async ()
     withOffline(
       withManifest({
         manifest: {
+          output: './public/',
           name: 'next-app',
         },
       }),
@@ -94,16 +101,17 @@ test('withOffline pre-caches the generated manifest from withManifest', async ()
   await nextBuild.default(cwd, nextConf);
 
   const serviceWorkerContent = await readBuildFile('service-worker.js');
-  expect(serviceWorkerContent).toEqual(expect.stringContaining('_next/static/manifest/manifest.json'));
+  expect(serviceWorkerContent).toEqual(expect.stringContaining('.next/public/manifest.json'));
 });
 
-// TODO: unskip this when https://github.com/GoogleChrome/workbox/issues/2138 is fixed
-test.skip('withOffline respects "swDest"', async () => {
+test('withOffline respects "swDest"', async () => {
   const customSWDest = './static/service-worker.js';
 
-  const nextConf = forceProd(withOffline({
-    workboxOpts: { swDest: customSWDest }
-  }));
+  const nextConf = forceProd(
+    withOffline({
+      workboxOpts: { swDest: customSWDest },
+    }),
+  );
 
   await nextBuild.default(cwd, nextConf);
   await access(getNextBuildFilePath(customSWDest), fs.constants.F_OK);
