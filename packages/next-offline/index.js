@@ -10,7 +10,7 @@ const exportSw = require('./export');
 const preCacheManifestBlacklist = ['react-loadable-manifest.json', 'build-manifest.json'];
 
 // Directory where public assets must be placed in Next projects.
-const nextAssetDirectory = 'public';
+const nextAssetDirectory = 'static';
 
 const defaultInjectOpts = {
   exclude: preCacheManifestBlacklist,
