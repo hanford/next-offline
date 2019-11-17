@@ -2,11 +2,11 @@ node_modules/
 */.next
 *.log
 */node_modules
-*/packges/*/static/manifest/
+*/packges/*/public/manifest/
 */packages/*/.next
 packages/next-offline/register-sw-compiled.js
-packages/tests/static/manifest/
-packages/tests/static/manifest
+packages/tests/public/manifest/
+packages/tests/public/manifest
 packages/tests/.next/
 packages/now1-example/.next
 packages/now2-example/.next

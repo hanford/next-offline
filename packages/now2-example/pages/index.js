@@ -4,7 +4,7 @@ export default () => (
   <>
     <Head>
       <title>Offline Next.js with Now 2.0</title>
-      <link rel="manifest" href="/static/manifest.json" />
+      <link rel="manifest" href="/manifest.json" />
       <meta name="theme-color" content="#72B340" />
       <meta
         name="description"

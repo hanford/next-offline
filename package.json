@@ -15,10 +15,10 @@
     "Jack Hanford"
   ],
   "devDependencies": {
-    "husky": "^0.14.3",
+    "husky": "^3.0.9",
     "lerna": "^3.16.4",
     "prettier": "^1.14.3",
-    "pretty-quick": "^1.7.0"
+    "pretty-quick": "^2.0.1"
   },
   "husky": {
     "hooks": {
