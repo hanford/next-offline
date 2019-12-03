@@ -1,6 +1,6 @@
 {
   "name": "now2-example",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "next": "^9.1.3",
-    "next-offline": "^5.0.0-beta.9",
+    "next-offline": "^5.0.0-beta.11",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   }
