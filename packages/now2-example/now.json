@@ -1,19 +1,24 @@
 {
   "version": 2,
-  "routes": [
+  "rewrites": [
     {
-      "src": "^/service-worker.js$",
-      "dest": "/_next/static/service-worker.js",
-      "headers": {
-        "cache-control": "public, max-age=43200, immutable",
-        "Service-Worker-Allowed": "/"
-      }
+      "source": "/service-worker.js",
+      "destination": "/_next/static/service-worker.js"
     }
   ],
-  "builds": [
+  "headers": [
     {
-      "src": "next.config.js",
-      "use": "@now/next"
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=43200, immutable"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
     }
   ]
 }
