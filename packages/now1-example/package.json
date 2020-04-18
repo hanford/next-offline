@@ -1,7 +1,7 @@
 {
   "name": "now-1example",
   "private": true,
-  "version": "1.0.10",
+  "version": "1.0.11",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "next": "^9.1.3",
-    "next-offline": "^5.0.0",
+    "next-offline": "^5.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   }

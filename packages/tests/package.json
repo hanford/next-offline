@@ -1,6 +1,6 @@
 {
   "name": "next-offline-test-app",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": true,
   "scripts": {
     "dev": "node server.js",
@@ -15,7 +15,7 @@
     "next": "^9.1.3",
     "next-compose-plugins": "^2.2.0",
     "next-manifest": "^3.0.1",
-    "next-offline": "^5.0.0",
+    "next-offline": "^5.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "rimraf": "^3.0.0"
