@@ -7,7 +7,7 @@ const { cwd } = require('process');
 const exportSw = require('./export');
 
 // Next build metadata files that shouldn't be included in the pre-cache manifest.
-const preCacheManifestBlacklist = ['react-loadable-manifest.json', 'build-manifest.json'];
+const preCacheManifestBlacklist = ['react-loadable-manifest.json', 'build-manifest.json', /\.map$/];
 
 // Directory where public assets must be placed in Next projects.
 const nextAssetDirectory = 'static';
