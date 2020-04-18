@@ -278,7 +278,7 @@ If you'd like to include some more or change the origin of your static files use
 
 ```js
 workboxOpts: {
-  modifyUrlPrefix: {
+  modifyURLPrefix: {
     'app': assetPrefix,
   },
   runtimeCaching: {...}
