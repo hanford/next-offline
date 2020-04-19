@@ -140,6 +140,28 @@ class App extends React.Component {
 }
 ```
 
+You can choose to pass the service worker path and scope if needed. 
+```js
+import { register, unregister } from 'next-offline/runtime'
+
+class App extends React.Component {
+  componentDidMount () {
+    /** 
+      *  Default service worker path is '/service-worker.js' 
+      * Refer https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register for default scope rules
+      *
+    */
+    register('/sub_folder/service-worker.js', {scope: '/sub_folder'}) 
+  }
+  componentWillUnmount () {
+    unregister()
+  }
+  ..
+}
+```
+https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register
+
+
 If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
 ```js
 // next.config.js
