@@ -159,8 +159,6 @@ class App extends React.Component {
   ..
 }
 ```
-https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register
-
 
 If you're handling registration on your own, pass `dontAutoRegisterSw` to next-offline.
 ```js
