@@ -185,7 +185,7 @@ On top of the workbox options, next-offline has some options built in flags to g
     <tr>
       <td>generateSw</td>
       <td>Boolean</td>
-      <td>If false, next-offline will not generate a service worker and will instead try to modify workboxOpts.swSrc</td>
+      <td>If false, next-offline will not generate a service worker and will instead try to modify the file found in workboxOpts.swSrc using WorkBox's [Inject Plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#injectmanifest_plugin)</td>
       <td>true</td>
     </tr>
     <tr>
