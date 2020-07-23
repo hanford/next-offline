@@ -100,7 +100,7 @@ app.prepare()
     })
   })
 ```
-You can  read more about custom servers in the [Next.js docs](https://github.com/zeit/next.js#custom-server-and-routing)
+You can  read more about custom servers in the [Next.js docs](https://nextjs.org/docs/advanced-features/custom-server)
 
 If you're not hosting with Now, I'd probably follow the Now 1.0 approach because the custom server API can enable a lot of functionality, it just simply doesn't work well with Now 2.0 🙇‍♂️
 
