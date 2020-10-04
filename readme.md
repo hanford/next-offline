@@ -46,7 +46,7 @@ const nextConfig = {
 module.exports = withOffline(nextConfig)
 ```
 
-Next we need to make sure our the application is properly serving the service worker, this setup depends on how you're hosting your application. There is [documentation](#serving-service-worker) below. If you're not using Now 2.0, the Now 1.0 example should work in most circumstances.
+Next we need to make sure our application is properly serving the service worker, this setup depends on how you're hosting your application. There is [documentation](#serving-service-worker) below. If you're not using Now 2.0, the Now 1.0 example should work in most circumstances.
 
 ## Documentation
 - [Serving service worker](#serving-service-worker)
