@@ -67,13 +67,13 @@ module.exports = (nextConfig = {}) => ({
     // Generate SW
     if (skipDuringDevelopment) {
       // Simply copy development service worker.
-      config.plugins.push(new CopyWebpackPlugin([devSwSrc]));
+      config.plugins.push(new CopyWebpackPlugin({ patterns: [devSwSrc] }));
     } else if (!options.isServer) {
       // Only run once for the client build.
       config.plugins.push(
         // Workbox uses Webpack's asset manifest to generate the SW's pre-cache manifest, so we need
         // to copy the app's assets into the Webpack context so those are picked up.
-        new CopyWebpackPlugin([{ from: `${join(cwd(), nextAssetDirectory)}/**/*` }]),
+        new CopyWebpackPlugin({ patterns: [{ from: `${join(cwd(), nextAssetDirectory)}/**/*` }] }),
         generateSw
           ? new GenerateSW({ ...defaultGenerateOpts, ...workboxOpts })
           : new InjectManifest({ ...defaultInjectOpts, ...workboxOpts }),
