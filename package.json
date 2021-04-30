@@ -27,5 +27,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "copy-webpack-plugin": "^6.4.0"
+  }
 }

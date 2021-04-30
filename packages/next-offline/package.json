@@ -48,7 +48,7 @@
     "webpack": "^4.19.1"
   },
   "dependencies": {
-    "copy-webpack-plugin": "~5.1.2",
+    "copy-webpack-plugin": "6.4.0",
     "fs-extra": "~8.1.0",
     "workbox-webpack-plugin": "^5.0.0"
   }
